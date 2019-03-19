@@ -1,0 +1,312 @@
+{
+  "users": [
+    {
+      "username": "aldi",
+      "email": "aldiluki89@gmail.com",
+      "password": "rahasia",
+      "id": 1
+    },
+    {
+      "username": "",
+      "email": "",
+      "password": "",
+      "id": 2
+    },
+    {
+      "username": "acong",
+      "email": "acong@gmail.com",
+      "password": "asdf",
+      "id": 3
+    },
+    {
+      "username": "asu",
+      "email": "asujaran@gmail.com",
+      "password": "1234",
+      "id": 4
+    },
+    {
+      "username": "alona",
+      "email": "jk@gfh.com",
+      "password": "jhghg",
+      "id": 5
+    },
+    {
+      "username": "tata",
+      "email": "jk@gfh.com",
+      "password": "jhghg",
+      "id": 6
+    },
+    {
+      "username": "oon",
+      "email": "kjj@jhgh.com",
+      "password": "k*n",
+      "id": 7
+    },
+    {
+      "username": "opah",
+      "email": "k@gg.com",
+      "password": "zxc",
+      "id": 8
+    },
+    {
+      "username": "cocol",
+      "email": "k@gg.com",
+      "password": "zxc",
+      "id": 9
+    },
+    {
+      "username": "cocolakl",
+      "email": "k@gg.com",
+      "password": "zxc",
+      "id": 10
+    },
+    {
+      "username": "dadang",
+      "email": "ads@aa.com",
+      "password": "acv",
+      "id": 11
+    },
+    {
+      "username": "dadangkonelo",
+      "email": "ads@aa.com",
+      "password": "acv",
+      "id": 12
+    },
+    {
+      "username": "zzzz",
+      "email": "sd",
+      "password": "qsdq",
+      "id": 13
+    },
+    {
+      "username": "bbb",
+      "email": "gjhvgfh",
+      "password": "jgj",
+      "id": 14
+    },
+    {
+      "username": "osas",
+      "email": "saha@gmail.com",
+      "password": "asu",
+      "id": 15
+    },
+    {
+      "username": "bombom",
+      "email": "asdsa",
+      "password": "asdad",
+      "id": 16
+    },
+    {
+      "username": "tora",
+      "email": "zxcz@d.com",
+      "password": "sadsa",
+      "id": 17
+    },
+    {
+      "username": "adf",
+      "email": "asdasa",
+      "password": "afsax",
+      "id": 18
+    },
+    {
+      "username": "sadasdf",
+      "email": "sadasd",
+      "password": "sadasd",
+      "id": 19
+    },
+    {
+      "username": "asdfghjk",
+      "email": "",
+      "password": "",
+      "id": 20
+    },
+    {
+      "username": "asdfghjklmnbv",
+      "email": "",
+      "password": "",
+      "id": 21
+    },
+    {
+      "username": "saya",
+      "email": "",
+      "password": "",
+      "id": 22
+    },
+    {
+      "username": "osassss",
+      "email": "kkbj@bvh.com",
+      "password": "hjhv",
+      "id": 23
+    },
+    {
+      "username": "pepew",
+      "email": "ljlkb@jhgjfhj.com",
+      "password": "jhgjhvgffh",
+      "id": 24
+    },
+    {
+      "username": "liuhib",
+      "email": "ouhiug@jhbhg.com",
+      "password": "hhbhvj",
+      "id": 25
+    },
+    {
+      "username": "iuguhgh",
+      "email": "fyft@jyfuyf.com",
+      "password": "hfyhtf",
+      "id": 26
+    },
+    {
+      "username": "asdf",
+      "email": "sad",
+      "password": "sadasf",
+      "id": 27
+    },
+    {
+      "username": "kjnuhuiv",
+      "email": "sad",
+      "password": "sadasf",
+      "id": 28
+    },
+    {
+      "username": "unyil",
+      "email": "sad",
+      "password": "asfasfad",
+      "id": 29
+    },
+    {
+      "username": "jbhgfhcfhv",
+      "email": "dsfdsf",
+      "password": "dsfsd",
+      "id": 30
+    },
+    {
+      "username": "jhgjukrhuftgydcjhgk",
+      "email": "knknblkn",
+      "password": "jnkb",
+      "id": 31
+    },
+    {
+      "username": "asdasfdfasd",
+      "email": "lknkn",
+      "password": "knkn",
+      "id": 32
+    },
+    {
+      "username": "atep",
+      "email": "bvhcvhm",
+      "password": "kjvhgkhv",
+      "id": 33
+    },
+    {
+      "username": "made",
+      "email": "kjkbj",
+      "password": "hkihuu",
+      "id": 34
+    },
+    {
+      "username": "abc",
+      "email": "lkjlkn",
+      "password": "k*nkb",
+      "id": 35
+    },
+    {
+      "username": "kllnk",
+      "email": "kjnk",
+      "password": "jjijbn",
+      "id": 36
+    },
+    {
+      "username": "ijiljnjk",
+      "email": "asda",
+      "password": "asd",
+      "id": 37
+    },
+    {
+      "username": "admin1989",
+      "email": "admin@gmail.com",
+      "password": "admin",
+      "id": 38
+    },
+    {
+      "username": "asn",
+      "email": "asn@gmail.com",
+      "password": "lala",
+      "id": 39
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "REGINA SPEKTOR FAR",
+      "genre": "Rock",
+      "desc": "Condition : NEW, Sealed, Country: Europe, Released: 22 Jun 2009, Format: Vinyl, LP, Album  ",
+      "price": 350000,
+      "src": "https://instagram.fcgk10-1.fna.fbcdn.net/vp/60dbc2b37b85c9af1b34be720e414d34/5D0CDEAC/t51.2885-15/e35/52422531_123159568791065_9150419908006247230_n.jpg?_nc_ht=instagram.fcgk10-1.fna.fbcdn.net"
+    },
+    {
+      "name": "MICHAEL BUBLE TO BE LOVED",
+      "genre": "Jazz",
+      "desc": "Condition : NEW, Sealed, Format: Vinyl, LP, Album Country: Europe Released: 06 Jun 2013 ",
+      "price": 385000,
+      "src": "https://instagram.fcgk10-1.fna.fbcdn.net/vp/2627f71529966e786d30cfbe46cd58e8/5D24C255/t51.2885-15/e35/52820335_140275477018958_6217739359296618203_n.jpg?_nc_ht=instagram.fcgk10-1.fna.fbcdn.net",
+      "id": 2
+    },
+    {
+      "name": "QUEEN BOHEMIAN RHAPSODY (THE ORIGINAL SOUNDTRACK) [2xLP]",
+      "genre": "Rock",
+      "desc": "Condition : NEW, Sealed, Label: Virgin EMI Records ‎– 0602567988724 Format: 2 × Vinyl, LP, Album, Compilation  Country: Europe",
+      "price": 575000,
+      "src": "https://instagram.fcgk10-1.fna.fbcdn.net/vp/ed344959faf9c2387cbc1d3b24610969/5D0B1F3C/t51.2885-15/e35/53022144_125046465246711_7516850431257040755_n.jpg?_nc_ht=instagram.fcgk10-1.fna.fbcdn.net",
+      "id": 5
+    },
+    {
+      "name": "HALSEY HOPELESS FOUNTAIN KINGDOM [Clear Vinyl]",
+      "genre": "Pop",
+      "desc": "Condition : NEW, Sealed, Label: Astralwerks ‎– 2557499223 Format: Vinyl, LP, Album, Clear w/ Teal Splatter  Country: USA & Europe Released: 02 Jun 2017",
+      "price": "385000",
+      "src": "https://instagram.fcgk10-1.fna.fbcdn.net/vp/fe34b34988002fd8e21448d085a3f31b/5D2A4614/t51.2885-15/e35/51679258_626505874447391_5135129699317795789_n.jpg?_nc_ht=instagram.fcgk10-1.fna.fbcdn.net",
+      "id": 6
+    },
+    {
+      "name": "LANA DEL REY BORN TO DIE",
+      "genre": "Pop",
+      "desc": "Condition : NEW, Sealed, Label: Interscope Records , Polydor B0016425-01 Format: Vinyl, LP, Album  Country: US Released: 21 Feb 2012",
+      "price": "385000",
+      "src": "https://instagram.fcgk10-1.fna.fbcdn.net/vp/8554de4a9913ffee186c74195437e0ab/5D266CA3/t51.2885-15/e35/53123418_2216737895260409_3072766880935100037_n.jpg?_nc_ht=instagram.fcgk10-1.fna.fbcdn.net",
+      "id": 7
+    },
+    {
+      "name": "SHAWN MENDES ILLUMINATE",
+      "genre": "Rock",
+      "desc": "Condition : NEW, Sealed, Label: Island Records 0602557084139 Format: Vinyl, LP, Album  Country: Europe Released: 2016",
+      "price": "SOLD (Contact Us for Pre-Order)",
+      "src": "https://instagram.fcgk10-1.fna.fbcdn.net/vp/83704a976c0ec5806c6452be72e4c0f8/5D1EAB1E/t51.2885-15/e35/50807058_792016947798657_7308358228674259672_n.jpg?_nc_ht=instagram.fcgk10-1.fna.fbcdn.net",
+      "id": 8
+    },
+    {
+      "name": "CHUCK BERRY GREATEST HITS",
+      "genre": "Rock",
+      "desc": "Condition : NEW, Sealed, Label: Not Now Music Limited ‎– CATLP142 Format: Vinyl, 12\", 33 ⅓ RPM, Compilation  Country: Europe Released: 23 Feb 2018",
+      "price": "SOLD (Contact Us for Pre-Order)",
+      "src": "https://instagram.fcgk10-1.fna.fbcdn.net/vp/37f2679621eda55549afef2b5415a755/5D2654FC/t51.2885-15/e35/50646851_627365687696533_389882339297532252_n.jpg?_nc_ht=instagram.fcgk10-1.fna.fbcdn.net",
+      "id": 9
+    },
+    {
+      "name": "STEVIE WONDER TALKING BOOK",
+      "genre": "Funk",
+      "desc": "Condition : NEW, Sealed, Label: Tamla ‎– B0025529-01, Motown ‎– B0025529-01, UMe ‎– B0025529-01 Format: Vinyl, LP, Album, Reissue, Gatefold, Braille  Country: US Released: 02 Dec 2016",
+      "price": "SOLD (Contact Us for Pre-Order)",
+      "src": "https://instagram.fcgk10-1.fna.fbcdn.net/vp/ec822fcb41d3e5a30ee72984807838c0/5D0CC7CA/t51.2885-15/e35/50570930_1147708052076678_2592017604590346528_n.jpg?_nc_ht=instagram.fcgk10-1.fna.fbcdn.net",
+      "id": 10
+    },
+    {
+      "name": "PRINCE 1999 [Limited Edition]",
+      "genre": "Funk",
+      "desc": "Condition : NEW, Sealed, Label: Warner Bros. Records Inc. ‎– 603497861484 Format: Vinyl, LP, Album, Limited Edition, Reissue  Country: Europe Released: 21 Apr 2018",
+      "price": "495000",
+      "src": "https://instagram.fcgk10-1.fna.fbcdn.net/vp/b6398ad227fb3cb053ba982187227f15/5D224BF5/t51.2885-15/e35/53341411_427622131319088_5808907210389222696_n.jpg?_nc_ht=instagram.fcgk10-1.fna.fbcdn.net",
+      "id": 11
+    }
+  ]
+}
