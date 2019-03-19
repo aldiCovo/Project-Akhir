@@ -1,0 +1,40 @@
+import React, { Component } from "react";
+import axios from "axios";
+
+import ProductItem from "./ProductItem";
+
+class Etalase extends Component {
+  state = {
+    products: []
+  };
+
+  componentDidMount() {
+    this.getProduct();
+  }
+
+  getProduct = () => {
+    axios.get("http://localhost:1996/products").then(res => {
+      this.setState({ products: res.data });
+    });
+  };
+
+  renderList = () => {
+    return this.state.products.map(iteem => {
+      return <ProductItem item={iteem} />; // iteem merupakan tampungan dari objek products yang berisi { id:..., name:..., dec:..., price:...}
+    });
+  };
+
+  render() {
+    console.log(this.state.products);
+    return (
+      <div className="row my-5">
+        <div className="col-2">
+          <h1 className="display-4">Search</h1>
+        </div>
+        <div className="row col-10">{this.renderList()}</div>
+      </div>
+    );
+  }
+}
+
+export default Etalase;
