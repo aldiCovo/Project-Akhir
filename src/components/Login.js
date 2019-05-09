@@ -25,14 +25,14 @@ class Login extends Component {
     }
   };
   onSubmitClick = () => {
-    const user = this.username.value;
+    const email = this.email.value;
     const pass = this.password.value;
     // console.log("Username : " + user);
     // console.log("Password : " + pass);
-    this.props.onLoginClick(user, pass);
+    this.props.onLoginClick(email, pass);
   };
   render() {
-    if (this.props.user.username === "") {
+    if (this.props.user.email === "") {
       return (
         <div className="woyo">
           <div className="mt-5 row">
@@ -42,12 +42,12 @@ class Login extends Component {
                   <h1>Login</h1>
                 </div>
                 <div className="card-title mt-1">
-                  <h4>Username</h4>
+                  <h4>Email</h4>
                 </div>
                 <form className="input-group">
                   <input
                     ref={input => {
-                      this.username = input;
+                      this.email = input;
                     }}
                     className="form-control"
                     type="text"

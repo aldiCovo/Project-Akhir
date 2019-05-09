@@ -9,6 +9,14 @@ import Register from "./Register";
 import { keepLogin } from "../actions";
 import { connect } from "react-redux";
 import ManageProduct from "./ManageProduct";
+import Kebijakan from "./Kebijakan";
+import Pop from "./Pop";
+import Rock from "./Rock";
+import Jazz from "./Jazz";
+import Country from "./Country";
+import AllProduct from "./AllProduct";
+import Cart from "./Cart";
+import ManageProfile from "./MangeProfile";
 
 const cookie = new cookies();
 
@@ -45,7 +53,15 @@ class App extends React.Component {
           <Route path="/login" component={Login} />
           {/* {this.onUserLogin()} */}
           <Route path="/manageproduct" component={ManageProduct} />
-          <Route path="/allproduct" component={ManageProduct} />
+          {/* <Route path="/allproduct" component={ManageProduct} /> */}
+          <Route path="/kebijakan" component={Kebijakan} />
+          <Route path="/pop" component={Pop} />
+          <Route path="/rock" component={Rock} />
+          <Route path="/jazz" component={Jazz} />
+          <Route path="/country" component={Country} />
+          <Route path="/allproduct" component={AllProduct} />
+          <Route path="/cart" component={Cart} />
+          <Route path="/manageprofile" component={ManageProfile} />
           {/* <Route path="/detailproduct/:asdfg" component={DetailProduct} /> */}
         </div>
       </BrowserRouter>

@@ -13,10 +13,14 @@ class ProductItem extends Component {
       >
         <img src={item.src} className="card-img-top-center" alt={item.name} />
         <div className="card-body">
-          <h5 className="card-title">{item.name}</h5>
-          <p className="card-text">{item.desc}</p>
-          <p className="card-text">{item.genre}</p>
-          <p className="card-text">Rp.{item.price}</p>
+          <h5 className="card-title">{item.tittle}</h5>
+
+          <p className="card-title">Artist : {item.artist}</p>
+          {/* <p className="card-text">{item.desc}</p> */}
+
+          <p className="card-text">Genre : {item.genre}</p>
+
+          <p className="card-text">Price : Rp. {item.price} </p>
           <input className="form-control" type="number" />
           <Link to={"/detailproduct/" + item.id}>
             <button className="btn btn-secondary btn-block btn-sm my-2">

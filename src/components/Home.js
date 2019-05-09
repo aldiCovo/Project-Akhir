@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import Etalase from "./Etalase";
+// import Etalase from "./Etalase";
+import { Link /*,Redirect*/ } from "react-router-dom";
 //import { Media } from "reactstrap";
 
 class Home extends Component {
@@ -32,7 +33,7 @@ class Home extends Component {
             <div className="col-sm-8">
               <div
                 id="carouselExampleSlidesOnly"
-                class="carousel slide"
+                class="carousel slide mb-2 ml-2"
                 data-ride="carousel"
               >
                 <div class="carousel-inner">
@@ -63,20 +64,20 @@ class Home extends Component {
 
             <div className="col-sm-4">
               <div className="row">
-                <div className="col-12 col-sm-5 m-2  mb-2 gendre1 text-light font-weight-bold">
-                  POP
+                <div className="col-12 col-sm-5  ml-2 mb-2 gendre1 text-light font-weight-bold">
+                  <Link to="/pop">POP</Link>
                 </div>
-                <div className="col-12 col-sm-5 m-2  gendre2 text-light font-weight-bold">
-                  ROCK
+                <div className="col-12 col-sm-5 ml-2 mb-2 gendre2 text-light font-weight-bold">
+                  <Link to="/rock">ROCK</Link>
                 </div>
 
                 <div className="w-100" />
 
-                <div className="col-12 col-sm-5 m-2 gendre3 text-light font-weight-bold">
-                  JAZZ
+                <div className="col-12 col-sm-5 ml-2 mb-2 gendre3 text-light font-weight-bold">
+                  <Link to="/jazz">JAZZ</Link>
                 </div>
-                <div className="col-12 col-sm-5 m-2 gendre4 text-light font-weight-bold">
-                  COUNTRY
+                <div className="col-12 col-sm-5 ml-2 mb-2 gendre4 text-light font-weight-bold">
+                  <Link to="/country">COUNTRY</Link>
                 </div>
               </div>
             </div>
@@ -88,9 +89,7 @@ class Home extends Component {
             <div className="col-10">Deskripsi usaha</div>
           </div>
         </div>
-        <div className="container">
-          <Etalase />
-        </div>
+        <div className="container">{/* <Etalase /> */}</div>
       </div>
     );
   }

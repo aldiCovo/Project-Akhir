@@ -46,26 +46,43 @@ class ManageProduct extends Component {
 
   // Fungsi Add Produk
   onAddProduct = () => {
-    const namaProd = this.name.value;
+    const namaArtist = this.artist.value;
+    const namaTittle = this.tittle.value;
     const genreProd = this.genre.value;
     const deskripsi = this.desc.value;
     const harga = this.price.value;
     const gambar = this.pict.value;
 
-    console.log(namaProd);
+    console.log(namaArtist);
+    console.log(namaTittle);
     console.log(genreProd);
     console.log(deskripsi);
     console.log(harga);
     console.log(gambar);
 
-    this.onUploadProduct(namaProd, genreProd, deskripsi, harga, gambar);
+    this.onUploadProduct(
+      namaArtist,
+      namaTittle,
+      genreProd,
+      deskripsi,
+      harga,
+      gambar
+    );
   };
 
   //axios.post pake fungsion
-  onUploadProduct = (namaProd, genreProd, deskripsi, harga, gambar) => {
+  onUploadProduct = (
+    namaArtist,
+    namaTittle,
+    genreProd,
+    deskripsi,
+    harga,
+    gambar
+  ) => {
     axios
       .post(" http://localhost:1996/products", {
-        name: namaProd,
+        artist: namaArtist,
+        tittle: namaTittle,
         genre: genreProd,
         desc: deskripsi,
         price: harga,
@@ -78,12 +95,12 @@ class ManageProduct extends Component {
 
   // Ini jalan sekali setelah proses render pertama kali
   componentDidMount() {
-    this._isMounted = true;
+    //this._isMounted = true;
     this.getProduct();
   }
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+  // componentWillUnmount() {
+  //   this._isMounted = false;
+  // }
 
   getProduct = () => {
     axios.get("http://localhost:1996/products").then(res => {
@@ -99,7 +116,8 @@ class ManageProduct extends Component {
         return (
           <tr key={item.id}>
             <td>{item.id}</td>
-            <td>{item.name}</td>
+            <td>{item.artist}</td>
+            <td>{item.tittle}</td>
             <td>{item.genre}</td>
             <td>{item.desc}</td>
             <td>{item.price}</td>
@@ -135,10 +153,20 @@ class ManageProduct extends Component {
               <input
                 className="form-control"
                 ref={input => {
-                  this.editName = input;
+                  this.editArtist = input;
                 }}
                 type="text"
-                defaultValue={item.name}
+                defaultValue={item.artist}
+              />
+            </td>
+            <td>
+              <input
+                className="form-control"
+                ref={input => {
+                  this.editTittle = input;
+                }}
+                type="text"
+                defaultValue={item.tittle}
               />
             </td>
             <td>
@@ -217,7 +245,8 @@ class ManageProduct extends Component {
             <thead>
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">NAME</th>
+                <th scope="col">ARTIST</th>
+                <th scope="col">TITTLE</th>
                 <th scope="col">GENRE</th>
                 <th scope="col">DESC</th>
                 <th scope="col">PRICE</th>
@@ -231,7 +260,8 @@ class ManageProduct extends Component {
           <table className="table text-center">
             <thead>
               <tr>
-                <th scope="col">NAME</th>
+                <th scope="col">ARTIST</th>
+                <th scope="col">TITTLE</th>
                 <th scope="col">GENRE</th>
                 <th scope="col">DESC</th>
                 <th scope="col">PRICE</th>
@@ -243,7 +273,15 @@ class ManageProduct extends Component {
               <tr>
                 <th scope="col">
                   <input
-                    ref={input => (this.name = input)}
+                    ref={input => (this.artist = input)}
+                    className="form-control"
+                    type="text"
+                    placeholder="Artist Name"
+                  />
+                </th>
+                <th scope="col">
+                  <input
+                    ref={input => (this.tittle = input)}
                     className="form-control"
                     type="text"
                     placeholder="Album Name"
