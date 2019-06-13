@@ -3,7 +3,12 @@ const init = {
   username: "",
   first_name: "",
   last_name: "",
-  email: ""
+  email: "",
+  password: "",
+  address: [],
+  users: [],
+  error: "",
+  success: ""
 };
 
 export default (state = init, action) => {
@@ -12,18 +17,49 @@ export default (state = init, action) => {
       return {
         ...state,
         id: action.payload.id,
-        username: action.payload.name,
-        first_name: action.payload.name,
-        last_name: action.payload.name,
+        username: action.payload.username,
+        first_name: action.payload.first_name,
+        last_name: action.payload.last_name,
         email: action.payload.email
       };
 
-    case "EDIT_SUCCESS":
+    case "EDIT_USERSUCCESS":
       return {
         ...state,
         id: action.payload.id,
-        name: action.payload.name
+        username: action.payload.username,
+        first_name: action.payload.first_name,
+        last_name: action.payload.last_name,
+        email: action.payload.email,
+        password: action.payload.password,
       };
+
+    case "EDIT_ADDRESSSUCCESS":
+      return {
+        ...state,
+        id: action.payload.id,
+        username: action.payload.username,
+        first_name: action.payload.first_name,
+        last_name: action.payload.last_name,
+        email: action.payload.email,
+        password: action.payload.password,
+      };
+
+    case "EDIT_USERDATA":
+    console.log(action.payload.data);
+    
+      return {
+        ...state,
+        users: action.payload.data
+      }
+      
+    case "EDIT_USERADDRESS":
+    console.log(action.payload.data);
+    
+      return {
+        ...state,
+        address: action.payload.data
+      }
 
     case "LOGOUT":
       return {
@@ -57,7 +93,13 @@ export default (state = init, action) => {
     case "AUTH_LOGOUT":
       return (state = init);
 
-    default:
+    case 'ADD_PROD_SUCCESS':
+      return{...state,error:'', success:action.payload}
+
+    case 'ADD_PROD_ERROR':
+      return{...state,error:action.payload, success:''}
+    
+            default:
       return state;
   }
 };

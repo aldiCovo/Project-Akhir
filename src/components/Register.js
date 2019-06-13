@@ -20,12 +20,12 @@ import {
 class Register extends Component {
   onErrorRegister = () => {
     if (this.props.error !== "") {
-      //setTimeout(this.props.onSetTimeOut, 3000);
+     // setTimeout(this.props.onSetTimeOut, 3000);
       return (
         <div className="alert alert-danger danger mt-2">{this.props.error}</div>
       );
     } else if (this.props.success !== "") {
-      //setTimeout(this.props.onSetTimeOut, 3000);
+      setTimeout(this.props.onSetTimeOut, 3000);
       return (
         <div className="alert alert-primary primary mt-2">
           {this.props.success}
@@ -45,11 +45,7 @@ class Register extends Component {
     const last = this.lastName.value;
     const email = this.email.value;
     const pass = this.password.value;
-    //const phone = this.phone.value;
-    //const alamat = this.address.value;
-    //const kota = this.city.value;
-    //const negara = this.negara.value;
-    //const pos = this.zip.value;
+    
     console.log("Username : " + user);
     console.log("Password : " + pass);
     this.props.onRegisterClick(
@@ -58,11 +54,7 @@ class Register extends Component {
       last,
       email,
       pass
-      // phone,
-      // alamat,
-      // kota,
-      // negara,
-      // pos
+      
     );
   };
   render() {
@@ -77,7 +69,7 @@ class Register extends Component {
         <Form>
           <Row form>
             <Col md={6}>
-              <FormGroup>
+            <FormGroup>
                 <Label for="exampleUsername">Username</Label>
                 <Input
                   innerRef={input => {
@@ -152,39 +144,7 @@ class Register extends Component {
               </FormGroup>
             </Col>
           </Row>
-          {/* <Row form>
-            <Col md={3}>
-              <FormGroup>
-                <Label for="examplePhone">Phone Number</Label>
-                <Input
-                  innerRef={input => {
-                    this.phone = input;
-                  }}
-                  type="text"
-                  name="phone"
-                  id="examplePhone"
-                  placeholder="phone number"
-                />
-              </FormGroup>
-            </Col>
-          </Row> */}
-          {/* <FormGroup>
-            <Label for="exampleCheckbox">Sex</Label>
-            <div>
-              <CustomInput
-                type="radio"
-                id="exampleCustomRadio"
-                name="customRadio"
-                label="Laki-laki"
-              />
-              <CustomInput
-                type="radio"
-                id="exampleCustomRadio2"
-                name="customRadio"
-                label="Perempuan"
-              />
-            </div>
-          </FormGroup> */}
+          
           <Row form>
             <Col md={2}>
               <FormGroup>
@@ -198,71 +158,7 @@ class Register extends Component {
               </FormGroup>
             </Col>
           </Row>
-          {/* <FormGroup>
-            <Label for="exampleAddress">Address </Label>
-            <Input
-              innerRef={input => {
-                this.address = input;
-              }}
-              type="text"
-              name="address"
-              id="exampleAddress"
-              placeholder="Apartment, Complek, cluster, or floor"
-            />
-          </FormGroup> */}
-          {/* <FormGroup>
-            <Label for="exampleAddress">Address </Label>
-            <Input
-              innerRef={input => {
-                this.address = input;
-              }}
-              type="text"
-              name="streets"
-              id="exampleAddress"
-              placeholder="Apartment, studio, or floor"
-            />
-          </FormGroup> */}
-          {/* <Row form>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="exampleCity">City</Label>
-                <Input
-                  innerRef={input => {
-                    this.city = input;
-                  }}
-                  type="text"
-                  name="city"
-                  id="exampleCity"
-                />
-              </FormGroup>
-            </Col>
-            <Col md={4}>
-              <FormGroup>
-                <Label for="exampleState">State</Label>
-                <Input
-                  innerRef={input => {
-                    this.negara = input;
-                  }}
-                  type="text"
-                  name="state"
-                  id="exampleState"
-                />
-              </FormGroup>
-            </Col>
-            <Col md={2}>
-              <FormGroup>
-                <Label for="exampleZip">Zip</Label>
-                <Input
-                  innerRef={input => {
-                    this.zip = input;
-                  }}
-                  type="text"
-                  name="zip"
-                  id="exampleZip"
-                />
-              </FormGroup>
-            </Col>
-          </Row> */}
+         
           <FormGroup check>
             <Input type="checkbox" name="check" id="exampleCheck" />
             <Label for="exampleCheck" check>
@@ -293,5 +189,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { onRegisterClick }
+  { onRegisterClick /*, onSetTimeOut*/ }
 )(Register);

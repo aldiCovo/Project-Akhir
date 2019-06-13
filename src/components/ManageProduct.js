@@ -1,17 +1,34 @@
 import React, { Component } from "react";
-import axios from "axios";
+import axios from '../config/axios'
 import cookies from "universal-cookie";
 import { Redirect } from "react-router-dom";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 // import { onUploadProduct } from "../actions";
+
+
+import {onUploadProduct, onUpdateProduct} from '../actions/index'
+
+import {
+  Col,
+  Row,
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  // FormText,
+  CustomInput
+} from "reactstrap";
 
 const cookie = new cookies();
 
 class ManageProduct extends Component {
-  _isMounted = false;
+ 
   state = {
     products: [],
-    selectedId: 0
+    stocks: [],
+    selectedId: 0,
+    // product_image: []
   };
 
   // Fungsi Edit
@@ -19,22 +36,63 @@ class ManageProduct extends Component {
     this.setState({ selectedId: id });
   };
   onSaveItem = id => {
-    const nama = this.editName.value;
-    const jenis = this.editGenre.value;
-    const desk = this.editDesc.value;
-    const harga = parseInt(this.editPrice.value);
-    const sumber = this.editImg.value;
-    axios
-      .put("http://localhost:1996/products/" + id, {
-        name: nama,
-        genre: jenis,
-        desc: desk,
-        price: harga,
-        src: sumber
-      })
-      .then(() => {
-        this.getProduct();
-      });
+    //const stok = this.editStock.value;
+    if(this.editImg.value!==undefined){
+     
+      const editArtist = this.editArtist.value;
+      const editTittle = this.editTittle.value;
+      const editGenre = this.editGenre.value;
+      const editDesk = this.editDesc.value;
+      const editHarga = parseInt(this.editPrice.value);
+      const editGambar = this.editImg.value;
+
+      this.props.onUpdateProduct(
+        id, 
+        editArtist,
+        editTittle,
+        editGenre,
+        editDesk,
+        editHarga,
+        editGambar
+  
+      )
+        .then(() => {
+          this.getProduct();
+        });
+    } else {
+      const editArtist = this.editArtist.value;
+      const editTittle = this.editTittle.value;
+      const editGenre = this.editGenre.value;
+      const editDesk = this.editDesc.value;
+      const editHarga = parseInt(this.editPrice.value);
+      const editGambar = this.editImg.value; // diisi devault value gimana????
+
+      this.props.onUpdateProduct(
+        id, 
+        editArtist,
+        editTittle,
+        editGenre,
+        editDesk,
+        editHarga,
+        editGambar
+  
+      )
+        .then(() => {
+          this.getProduct();
+        });
+
+    }
+    
+    // axios
+    //   .put("http://localhost:1996/products/" + id, {
+    //     //stock: stok,
+    //     name: nama,
+    //     genre: jenis,
+    //     desc: desk,
+    //     price: harga,
+    //     src: sumber
+    //   })
+   
   };
 
   // Fungsi Delet
@@ -44,86 +102,98 @@ class ManageProduct extends Component {
     });
   };
 
+
+  // Fungsi Add Stock
+  onAddStock = () => {
+    const jumlahStock = this.stock.value;
+
+    this.props.onUploadProduct(
+      jumlahStock
+      
+    );
+  }
   // Fungsi Add Produk
   onAddProduct = () => {
-    const namaArtist = this.artist.value;
-    const namaTittle = this.tittle.value;
-    const genreProd = this.genre.value;
-    const deskripsi = this.desc.value;
-    const harga = this.price.value;
-    const gambar = this.pict.value;
+    //const jumlahStock = this.stock.value;
+    const product_artist = this.artist.value;
+    const product_tittle = this.tittle.value;
+    const product_genre = this.genre.value;
+    const product_desc = this.desc.value;
+    const product_price = parseInt(this.price.value);
+    const product_image = this.image.files[0];
 
-    console.log(namaArtist);
-    console.log(namaTittle);
-    console.log(genreProd);
-    console.log(deskripsi);
-    console.log(harga);
-    console.log(gambar);
+    console.log(product_artist);
+    console.log(product_tittle);
+    console.log(product_genre);
+    console.log(product_desc);
+    console.log(product_price);
+    console.log(product_image);
 
-    this.onUploadProduct(
-      namaArtist,
-      namaTittle,
-      genreProd,
-      deskripsi,
-      harga,
-      gambar
+    this.props.onUploadProduct(
+     
+      product_artist,
+      product_tittle,
+      product_genre,
+      product_desc,
+      product_price,
+      product_image
     );
   };
 
   //axios.post pake fungsion
-  onUploadProduct = (
-    namaArtist,
-    namaTittle,
-    genreProd,
-    deskripsi,
-    harga,
-    gambar
-  ) => {
-    axios
-      .post(" http://localhost:1996/products", {
-        artist: namaArtist,
-        tittle: namaTittle,
-        genre: genreProd,
-        desc: deskripsi,
-        price: harga,
-        src: gambar
-      })
-      .then(res => {
-        this.getProduct();
-      });
-  };
-
+  
   // Ini jalan sekali setelah proses render pertama kali
   componentDidMount() {
     //this._isMounted = true;
     this.getProduct();
+    //this.getStock();
   }
-  // componentWillUnmount() {
-  //   this._isMounted = false;
-  // }
-
+  
+// getStock = () => {
+//   axios.get("/getStock").then(res => {
+//     this.setState({ stocks: res.data, selectedId: 0 })
+//   })
+// }
   getProduct = () => {
-    axios.get("http://localhost:1996/products").then(res => {
+    axios.get("/getProduct").then(res => {
       this.setState({ products: res.data, selectedId: 0 }); // .data adalah tempat data sebenarnya yg disediakan redux / this.setState adalah function untuk set ulang perubahan ke state kemudian otomatis fn render akan dijalankan lagi
-    });
-  };
+   });
+  }
+
+  getProdImg = (product_image)=>{
+    axios.get(`/showProdImg/${product_image}`)
+    .then(res=>{
+    })
+}
+
+
+imageList = () =>{
+  return this.state.product_image.map(image=>{
+      return(
+          <img classname="list" src={`http://localhost:2020/showProdImg/${image.product_image}`}></img>
+      )
+  })
+}
+
 
   renderList = () => {
     return this.state.products.map(item => {
+      this.getProdImg(item.product_image)
       // item berisi objek { id, name, desc, price, src }
       if (item.id !== this.state.selectedId) {
         //kondisi saat normal atau tidak tekan tombol edit
         return (
           <tr key={item.id}>
             <td>{item.id}</td>
-            <td>{item.artist}</td>
-            <td>{item.tittle}</td>
-            <td>{item.genre}</td>
-            <td>{item.desc}</td>
-            <td>{item.price}</td>
-            <td>
-              <img className="list" src={item.src} alt={item.name} />
-            </td>
+            <td>{item.stock}</td>
+            <td>{item.product_artist}</td>
+            <td>{item.product_tittle}</td>
+            <td>{item.product_genre}</td>
+            <td>{item.product_desc}</td>
+            <td>{item.product_price}</td>
+            
+            {/* <td>{this.imageList}</td> */}
+            <td><img src={`http://localhost:2020/showProdImg/${item.product_image}`} alt={item.product_tittle} className="list"></img></td>
             <td>
               <button
                 onClick={() => {
@@ -153,10 +223,20 @@ class ManageProduct extends Component {
               <input
                 className="form-control"
                 ref={input => {
+                  this.editStock = input;
+                }}
+                type="text"
+                defaultValue={item.stock}
+              />
+            </td>
+            <td>
+              <input
+                className="form-control"
+                ref={input => {
                   this.editArtist = input;
                 }}
                 type="text"
-                defaultValue={item.artist}
+                defaultValue={item.product_artist}
               />
             </td>
             <td>
@@ -166,7 +246,7 @@ class ManageProduct extends Component {
                   this.editTittle = input;
                 }}
                 type="text"
-                defaultValue={item.tittle}
+                defaultValue={item.product_tittle}
               />
             </td>
             <td>
@@ -176,7 +256,7 @@ class ManageProduct extends Component {
                   this.editGenre = input;
                 }}
                 type="text"
-                defaultValue={item.genre}
+                defaultValue={item.product_genre}
               />
             </td>
             <td>
@@ -186,7 +266,7 @@ class ManageProduct extends Component {
                   this.editDesc = input;
                 }}
                 type="text"
-                defaultValue={item.desc}
+                defaultValue={item.product_desc}
               />
             </td>
             <td>
@@ -196,10 +276,10 @@ class ManageProduct extends Component {
                   this.editPrice = input;
                 }}
                 type="text"
-                defaultValue={item.price}
+                defaultValue={item.product_price}
               />
             </td>
-            <td>
+            {/* <td>
               <input
                 className="form-control"
                 ref={input => {
@@ -208,7 +288,19 @@ class ManageProduct extends Component {
                 type="text"
                 defaultValue={item.src}
               />
+            </td> */}
+            <td>
+            <input type="file" id="myfile" multiple="multiple" 
+            // defaultValue={item.product_image}  
+            ref={input => this.editImg = input}/>
             </td>
+        {/* <FormGroup>
+          
+          <div className="custom-file">
+                <input type="file" id="myfile" multiple="multiple" defaultValue={item.product_image}  ref={input => this.editImg = input}/>
+          </div>
+             
+        </FormGroup> */}
             <td>
               <button
                 onClick={() => {
@@ -237,14 +329,19 @@ class ManageProduct extends Component {
   render() {
     //var userCookie = cookie.get("masihLogin");
     //console.log(userCookie);
-    if (cookie.get("masihLogin") !== undefined) {
+
+    const id = cookie.get('idLogin')
+    //if (cookie.get("masihLogin") !== undefined) {
+      if(this.props.user !==""){
+    //if (id !== undefined) {
       return (
-        <div className="container">
+        <div className="container manageproduct">
           <h1 className="display-4 text-center">Manage Product</h1>
           <table className="table table-hover mb-5">
             <thead>
               <tr>
                 <th scope="col">ID</th>
+                <th scope="col">STOCK</th>
                 <th scope="col">ARTIST</th>
                 <th scope="col">TITTLE</th>
                 <th scope="col">GENRE</th>
@@ -257,88 +354,159 @@ class ManageProduct extends Component {
             <tbody>{this.renderList()}</tbody>
           </table>
           <h1 className="display-4 text-center">Input Product</h1>
-          <table className="table text-center">
-            <thead>
-              <tr>
-                <th scope="col">ARTIST</th>
-                <th scope="col">TITTLE</th>
-                <th scope="col">GENRE</th>
-                <th scope="col">DESC</th>
-                <th scope="col">PRICE</th>
-                <th scope="col">PICTURE</th>
-                <th scope="col">ACTION</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="col">
-                  <input
-                    ref={input => (this.artist = input)}
-                    className="form-control"
-                    type="text"
-                    placeholder="Artist Name"
-                  />
-                </th>
-                <th scope="col">
-                  <input
-                    ref={input => (this.tittle = input)}
-                    className="form-control"
-                    type="text"
-                    placeholder="Album Name"
-                  />
-                </th>
-                <th scope="col">
-                  <input
-                    ref={input => (this.genre = input)}
-                    className="form-control"
-                    type="text"
-                    placeholder="Genre"
-                  />
-                </th>
-                <th scope="col">
-                  <input
-                    ref={input => (this.desc = input)}
-                    className="form-control"
-                    type="text"
-                    placeholder="Description"
-                  />
-                </th>
-                <th scope="col">
-                  <input
-                    ref={input => (this.price = input)}
-                    className="form-control"
-                    type="text"
-                    placeholder="Price"
-                  />
-                </th>
-                <th scope="col">
-                  <input
-                    ref={input => (this.pict = input)}
-                    className="form-control"
-                    type="text"
-                    placeholder="Link Image"
-                  />
-                </th>
-                <th scope="col">
-                  <button
+          
+           <div className="container  bg-transparent text-dark inputProd rounded">
+          <Form>
+          <Row form>
+            <Col md={2}>
+            <FormGroup>
+                <Label for="exampleStock">Stock</Label>
+                <Input
+                  innerRef={input => {
+                    this.stock = input;
+                  }}
+                  type="number"
+                  name="stock"
+                  id="exampleStock"
+                  placeholder="Stock"
+                />
+              </FormGroup>
+            </Col>
+            <button
                     className="btn btn-outline-warning"
                     onClick={this.onAddProduct}
                   >
                     Add
                   </button>
-                </th>
-              </tr>
-            </tbody>
-          </table>
+         
+          </Row>
+
+          <Row form>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="exampleArtist">Artist</Label>
+                <Input
+                  innerRef={input => {
+                    this.artist = input;
+                  }}
+                  type="text"
+                  name="artist"
+                  id="exampleArtist"
+                  placeholder="Artist"
+                />
+                 
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="exampleTittle">Tittle</Label>
+                <Input
+                  innerRef={input => {
+                    this.tittle = input;
+                  }}
+                  type="text"
+                  name="tittle"
+                  id="exampleTittle"
+                  placeholder="Tittle"
+                />
+              </FormGroup>
+                
+            </Col>
+          </Row>
+          <Row form>
+            <Col md={2}>
+              <FormGroup>
+                <Label for="exampleFirst">Genre</Label>
+                <Input
+                  innerRef={input => {
+                    this.genre = input;
+                  }}
+                  type="text"
+                  name="genre"
+                  id="exampleGenre"
+                  placeholder="Genre"
+                />
+              </FormGroup>
+            </Col>
+            <Col md={3}>
+              <FormGroup>
+                <Label for="examplePrice">Price</Label>
+                <Input
+                  innerRef={input => {
+                    this.price = input;
+                  }}
+                  type="number"
+                  name="price"
+                  id="examplePrice"
+                  placeholder="Price"
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row form>
+            <Col md={12}>
+            <FormGroup>
+          <Label for="exampleText">Description</Label>
+          <Input 
+              innerRef={input => {
+                  this.desc = input;
+              }} 
+              type="textarea" 
+              name="text" id="exampleText" 
+              placeholder="Description" 
+              />
+        </FormGroup>
+            </Col>
+            
+
+          </Row>
+          
+          <Row form>
+            <Col md={2}>
+              
+              <FormGroup>
+          
+          <div className="custom-file">
+                                <input type="file" id="myfile" multiple="multiple"  ref={input => this.image = input}/>
+                            </div>
+                            
+           
+          
+                            {/* <Button color="primary" onClick={() => this.fileUpload(this.props.id)}>Upload</Button> */}
+        </FormGroup>
+            </Col>
+          </Row>
+         
+          
+          <br />
+          <button
+                    className="btn btn-outline-warning"
+                    // onClick={(this.onAddProduct) (this.onAddStock)}
+                       onClick={this.onAddProduct}
+                  >
+                    Add
+                  </button>
+         
+        </Form>
+        </div>
         </div>
       );
     } else {
-      return <Redirect to="/" />;
+      return (<Redirect to="/" />);
+      
     }
   }
 }
 
-export default /*connect(
+
+const mapStateToProps = state =>{
+  return {
+      user: state.auth.users.username
+  }
+}
+
+
+export default connect(
   mapStateToProps,
-  { onUploadProduct }
-)*/ ManageProduct;
+   {onUploadProduct, onUpdateProduct} 
+)(ManageProduct)

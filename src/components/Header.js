@@ -3,13 +3,22 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { onLogoutUser } from "../actions";
+import cookies from "universal-cookie";
+
+const cookie = new cookies();
 
 class Header extends Component {
   render() {
     console.log(this.props.user);
-
-    const { user } = this.props;
-    if (user.email === "") {
+    const uname = cookie.get('usernameLogin')
+    // const last = cookie.get('last_nameLogin')
+    const id = cookie.get('idLogin')
+    if(this.props.newUser.length !==0) {
+      var { first_name, last_name} = this.props.newUser[0]
+    }
+    
+    //if (cookie.get("masihLogin") !== undefined) {
+    if (!id) {
       return (
         <div>
           <nav class="navbar navbar-expand-lg  fixed-top text-light">
@@ -178,7 +187,7 @@ class Header extends Component {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    Hallo {user.username}
+                    Hallo {uname} 
                   </Link>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <Link class="dropdown-item" to="/manageproduct">
@@ -206,7 +215,7 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => {
-  return { user: state.auth };
+  return { user: state.auth, newUser: state.auth.users };
 };
 export default connect(
   mapStateToProps,

@@ -17,6 +17,7 @@ import Country from "./Country";
 import AllProduct from "./AllProduct";
 import Cart from "./Cart";
 import ManageProfile from "./MangeProfile";
+import Profile from "./Profile";
 
 const cookie = new cookies();
 
@@ -62,6 +63,7 @@ class App extends React.Component {
           <Route path="/allproduct" component={AllProduct} />
           <Route path="/cart" component={Cart} />
           <Route path="/manageprofile" component={ManageProfile} />
+          <Route path="/profile" component={Profile} />
           {/* <Route path="/detailproduct/:asdfg" component={DetailProduct} /> */}
         </div>
       </BrowserRouter>
@@ -72,6 +74,10 @@ class App extends React.Component {
 const mapStateToProps = state => {
   return { user: state.auth.username };
 };
+
+// const mapStateToProps = state => {
+//   return { user: state.auth.users.username };
+// };
 
 export default connect(
   mapStateToProps,

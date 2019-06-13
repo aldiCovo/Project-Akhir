@@ -65,6 +65,30 @@ table img.list {
   border: 2px solid black;
 }
 
+.inputProd {
+  margin-top: 20px;
+
+  border: 2px solid black;
+}
+
+.manageprofile {
+  margin-top: 10px;
+
+  border: 2px solid black;
+}
+
+.manageproduct {
+  margin-top: 90px;
+
+ 
+}
+
+.imgmanageprofile {
+  margin-top: 90px;
+
+  
+}
+
 .cart {
   margin-top: 90px;
 }
