@@ -53,11 +53,7 @@ export const addAddress = (location_name, street, city, province, country, posta
   return async dispatch => {
     try {
       const user_id = cookie.get('idLogin')
-     // const res = await axios.get(`/getAddress/${city}`)
-     // console.log(res.data);
-      
-     //if (res.data.length === 0){
-      axios
+      const res = await axios
       .post(`/addAddress/${user_id}`, {
         location_name,
         street,
@@ -68,26 +64,19 @@ export const addAddress = (location_name, street, city, province, country, posta
         phone
         
       })
-      .then(res => {
-        console.log(res.data);
+      console.log(res.data);
+      console.log(res.data[0]);
+      console.log(res);
 
-        dispatch({
+      return dispatch({
           type: "ADD_USERADDRESS",
-          //payload: "Registrasi berhasil "
-        });
-        setTimeout(() => {
-          dispatch({
-            type: "SET_TIMEOUT"
-          });
-        }, 3000);
+          //type: "EDIT_USERADDRESS",
+         
+          payload: res
+      
+       
       });
-     //} 
-     //else {
-      //  return dispatch({
-      //    type: 'AUTH_ERROR',
-      //    payload: 'Email or username has been taken'
-      //  })
-     //}
+   
   
     } catch (e){
       console.log(e);
@@ -97,32 +86,7 @@ export const addAddress = (location_name, street, city, province, country, posta
    
   };
 };
-// export const onRegisterClick = (a, b, c, d, e) => {
-//   return dispatch => {
-//     axios
-//       .post("http://localhost:2020/register", {
-//         username: a,
-//         first_name: b,
-//         last_name: c,
-//         email: d,
-//         password: e
-        
-//       })
-//       .then(res => {
-//         console.log(res.data);
 
-//         dispatch({
-//           type: "AUTH_SUCCESS",
-//           payload: "Registrasi berhasil "
-//         });
-//         setTimeout(() => {
-//           dispatch({
-//             type: "SET_TIMEOUT"
-//           });
-//         }, 3000);
-//       });
-//   };
-// };
 
 
 export const onLoginClick = (email, password) => {
@@ -225,7 +189,7 @@ export const editUserAddress = (location_name, street, city, province, country, 
         postal_code,
         phone
       })
-      console.log(res);
+      console.log(res.data[0].location_name);
       
         return dispatch ({
           type: "EDIT_USERADDRESS",
@@ -243,32 +207,7 @@ export const editUserAddress = (location_name, street, city, province, country, 
 
 
 
-// export const onEdit = (name, age, /*email,*/ userId) => {
-//   return async dispatch => {
-//     try {
-//       const res = await axios.patch(`/users/${userId}`, {
-//         name,
-//         age
-//         //email
-//       });
-//       cookie.set("masihLogin", res.data.name, { path: "/" });
-//       cookie.set("idLogin", res.data._id, { path: "/" });
-//       //cookie.set("emailLogin", res.data.email, { path: "/" });
-//       cookie.set("ageLogin", res.data.age, { path: "/" });
-//       dispatch({
-//         type: "EDIT_SUCCESS",
-//         payload: {
-//           id: res.data._id,
-//           name: res.data.name,
-//           // email: res.data.email,
-//           age: res.data.age
-//         }
-//       });
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   };
-// };
+
 
 export const keepLogin = (name, id, age, email) => {
   if (name === undefined || id === undefined) {
@@ -294,7 +233,7 @@ export const keepLogin = (name, id, age, email) => {
   };
 };
 
-// get userData(username, firstName, lastName, email, password) by username
+// get userData(username, firstName, lastName, email, password) by userid
 export const getUser = () => {
   return async dispatch => {
     try {
@@ -354,9 +293,10 @@ export const getAuthUser = () => {
 
 // PRODUCT ROUTER
 
-
+// UPLOAD PRODUCT TO DB
 export const onUploadProduct = (
-  //jumlahStock,
+  
+  product_stock,
   product_artist,
   product_tittle,
   product_genre,
@@ -370,15 +310,19 @@ export const onUploadProduct = (
 
       const formData = new FormData()
 
+      formData.append('product_stock', product_stock)
       formData.append('product_artist', product_artist)
       formData.append('product_tittle', product_tittle)
       formData.append('product_genre', product_genre)
       formData.append('product_desc', product_desc)
       formData.append('product_price', product_price)
+      
+      if (product_image) {
       formData.append('product_image', product_image)
+      }
 
       //const userId = cookie.get("idLogin")
-      await axios.post("/postProd",formData, {
+      const res = await axios.post(`/postProd`,formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
@@ -386,9 +330,9 @@ export const onUploadProduct = (
       //console.log(res);
 
       // if(res.data[0].username){
-        dispatch ({
-          type: 'ADD_PROD_SUCCESS',
-          payload: 'Product has been added succesfully'
+        return dispatch ({
+          type: 'ADD_PRODUCTS',
+          payload: res
          })
       // }
       
@@ -403,6 +347,7 @@ export const onUploadProduct = (
 // EDIT PRODUCT
 export const onUpdateProduct = (
   id, 
+  editStock,
   editArtist,
   editTittle,
   editGenre,
@@ -415,6 +360,7 @@ export const onUpdateProduct = (
 
       const formData = new FormData()
 
+      formData.append('product_stock', editStock)
       formData.append('product_artist', editArtist)
       formData.append('product_tittle', editTittle)
       formData.append('product_genre', editGenre)
@@ -446,3 +392,38 @@ export const onUpdateProduct = (
 
 
 }
+
+
+// GET ALL PRODUCTS
+export const getProducts = () => {
+  return async dispatch => {
+      try {
+          const res = await axios.get('/getProduct')
+
+          return dispatch({
+              type: 'ADD_PRODUCTS',
+              payload: res
+          })
+      } catch (e) {
+          console.log(e);
+          
+      }
+  }
+}
+
+// DELETE PRODUCT
+export const deletProduct = id => {
+  console.log(id);
+  return async dispatch => {
+  try{
+    
+     await axios.delete(`/delete/products/${id}`)
+    }catch (e) {
+      console.log(e); 
+  } 
+} 
+}
+
+
+
+  

@@ -7,6 +7,7 @@ const init = {
   password: "",
   address: [],
   users: [],
+  products: [],
   error: "",
   success: ""
 };
@@ -54,11 +55,39 @@ export default (state = init, action) => {
       }
       
     case "EDIT_USERADDRESS":
+   // console.log(action.payload.config.data);
     console.log(action.payload.data);
     
       return {
         ...state,
+       // address: action.payload.config.data
         address: action.payload.data
+      }
+
+    case "ADD_USERADDRESS":
+    console.log(action.payload.config.data);
+    console.log(action.payload.data);
+    
+      return {
+        ...state,
+       // address: action.payload.config.data
+        address: action.payload.data
+      }
+
+    case "ADD_PRODUCTS":
+    console.log(action.payload.data);
+    
+      return {
+        ...state,
+        products: action.payload.data
+      }
+
+    case "EDIT_PRODUCT":
+    console.log(action.payload.data);
+    
+      return {
+        ...state,
+        products: action.payload.data
       }
 
     case "LOGOUT":

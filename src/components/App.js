@@ -17,7 +17,7 @@ import Country from "./Country";
 import AllProduct from "./AllProduct";
 import Cart from "./Cart";
 import ManageProfile from "./MangeProfile";
-import Profile from "./Profile";
+import AddAddress from "./AddAddress";
 
 const cookie = new cookies();
 
@@ -63,7 +63,7 @@ class App extends React.Component {
           <Route path="/allproduct" component={AllProduct} />
           <Route path="/cart" component={Cart} />
           <Route path="/manageprofile" component={ManageProfile} />
-          <Route path="/profile" component={Profile} />
+          <Route path="/addaddress" component={AddAddress} />
           {/* <Route path="/detailproduct/:asdfg" component={DetailProduct} /> */}
         </div>
       </BrowserRouter>

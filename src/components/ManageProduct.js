@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import axios from '../config/axios'
 import cookies from "universal-cookie";
-import { Redirect } from "react-router-dom";
+//import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 // import { onUploadProduct } from "../actions";
 
 
-import {onUploadProduct, onUpdateProduct} from '../actions/index'
+import {onUploadProduct, onUpdateProduct, getProducts, deletProduct} from '../actions/index'
 
 import {
   Col,
@@ -25,8 +25,8 @@ const cookie = new cookies();
 class ManageProduct extends Component {
  
   state = {
-    products: [],
-    stocks: [],
+    //products: [],
+    //stocks: [],
     selectedId: 0,
     // product_image: []
   };
@@ -35,86 +35,61 @@ class ManageProduct extends Component {
   onEditProduct = id => {
     this.setState({ selectedId: id });
   };
+
   onSaveItem = id => {
-    //const stok = this.editStock.value;
-    if(this.editImg.value!==undefined){
-     
-      const editArtist = this.editArtist.value;
-      const editTittle = this.editTittle.value;
-      const editGenre = this.editGenre.value;
-      const editDesk = this.editDesc.value;
-      const editHarga = parseInt(this.editPrice.value);
-      const editGambar = this.editImg.value;
-
-      this.props.onUpdateProduct(
-        id, 
-        editArtist,
-        editTittle,
-        editGenre,
-        editDesk,
-        editHarga,
-        editGambar
-  
-      )
-        .then(() => {
-          this.getProduct();
-        });
-    } else {
-      const editArtist = this.editArtist.value;
-      const editTittle = this.editTittle.value;
-      const editGenre = this.editGenre.value;
-      const editDesk = this.editDesc.value;
-      const editHarga = parseInt(this.editPrice.value);
-      const editGambar = this.editImg.value; // diisi devault value gimana????
-
-      this.props.onUpdateProduct(
-        id, 
-        editArtist,
-        editTittle,
-        editGenre,
-        editDesk,
-        editHarga,
-        editGambar
-  
-      )
-        .then(() => {
-          this.getProduct();
-        });
-
-    }
     
-    // axios
-    //   .put("http://localhost:1996/products/" + id, {
-    //     //stock: stok,
-    //     name: nama,
-    //     genre: jenis,
-    //     desc: desk,
-    //     price: harga,
-    //     src: sumber
-    //   })
-   
+      const editStock = this.editStock.value;
+      const editArtist = this.editArtist.value;
+      const editTittle = this.editTittle.value;
+      const editGenre = this.editGenre.value;
+      const editDesk = this.editDesc.value;
+      const editHarga = parseInt(this.editPrice.value);
+      const editGambar = this.editImg.files[0]; // diisi devault value gimana????
+
+      this.props.onUpdateProduct(
+        id, 
+        editStock,
+        editArtist,
+        editTittle,
+        editGenre,
+        editDesk,
+        editHarga,
+        editGambar
+  
+      )
+        .then(() => {
+          //this.getProduct()
+          this.onGetProduct();
+          
+          // this.props.getProducts()
+          // this.setState({ selectedId: 0 })
+        }).then(() => {
+          this.onSetState()
+        });
+
+    //}
   };
+
+  // // Fungsi Delet
+  // onDeleteProduct = id => {
+  //   axios.delete(`http://localhost:1996/products/${id}`).then(res => {
+  //     this.getProduct();
+  //   });
+  // };
+
 
   // Fungsi Delet
-  onDeleteProduct = id => {
-    axios.delete(`http://localhost:1996/products/${id}`).then(res => {
-      this.getProduct();
-    });
-  };
-
-
-  // Fungsi Add Stock
-  onAddStock = () => {
-    const jumlahStock = this.stock.value;
-
-    this.props.onUploadProduct(
-      jumlahStock
+  onDeleteProduct = async id => {
+    await this.props.deletProduct(id)
       
-    );
-  }
+      this.onGetProduct();
+    
+}
+
+  
   // Fungsi Add Produk
   onAddProduct = () => {
-    //const jumlahStock = this.stock.value;
+    const product_stock = this.stock.value;
     const product_artist = this.artist.value;
     const product_tittle = this.tittle.value;
     const product_genre = this.genre.value;
@@ -130,7 +105,7 @@ class ManageProduct extends Component {
     console.log(product_image);
 
     this.props.onUploadProduct(
-     
+      product_stock,
       product_artist,
       product_tittle,
       product_genre,
@@ -145,47 +120,34 @@ class ManageProduct extends Component {
   // Ini jalan sekali setelah proses render pertama kali
   componentDidMount() {
     //this._isMounted = true;
-    this.getProduct();
-    //this.getStock();
+    //this.getProduct();
+    this.onGetProduct();
+    this.onSetState()
   }
   
-// getStock = () => {
-//   axios.get("/getStock").then(res => {
-//     this.setState({ stocks: res.data, selectedId: 0 })
-//   })
-// }
-  getProduct = () => {
-    axios.get("/getProduct").then(res => {
-      this.setState({ products: res.data, selectedId: 0 }); // .data adalah tempat data sebenarnya yg disediakan redux / this.setState adalah function untuk set ulang perubahan ke state kemudian otomatis fn render akan dijalankan lagi
-   });
+  //Fn Get Product
+  onGetProduct = () => {
+    this.props.getProducts()
+   
   }
 
-  getProdImg = (product_image)=>{
-    axios.get(`/showProdImg/${product_image}`)
-    .then(res=>{
-    })
-}
+  onSetState = () => {
+    this.setState({ /*products: res.data,*/ selectedId: 0 }); // .data adalah tempat data sebenarnya yg disediakan redux / this.setState adalah function untuk set ulang perubahan ke state kemudian otomatis fn render akan dijalankan lagi
+  }
 
-
-imageList = () =>{
-  return this.state.product_image.map(image=>{
-      return(
-          <img classname="list" src={`http://localhost:2020/showProdImg/${image.product_image}`}></img>
-      )
-  })
-}
+  
 
 
   renderList = () => {
-    return this.state.products.map(item => {
-      this.getProdImg(item.product_image)
+    return this.props.products.map(item => {
+      //this.getProdImg(item.product_image)
       // item berisi objek { id, name, desc, price, src }
       if (item.id !== this.state.selectedId) {
         //kondisi saat normal atau tidak tekan tombol edit
         return (
           <tr key={item.id}>
             <td>{item.id}</td>
-            <td>{item.stock}</td>
+            <td>{item.product_stock}</td>
             <td>{item.product_artist}</td>
             <td>{item.product_tittle}</td>
             <td>{item.product_genre}</td>
@@ -226,7 +188,7 @@ imageList = () =>{
                   this.editStock = input;
                 }}
                 type="text"
-                defaultValue={item.stock}
+                defaultValue={item.product_stock}
               />
             </td>
             <td>
@@ -372,12 +334,7 @@ imageList = () =>{
                 />
               </FormGroup>
             </Col>
-            <button
-                    className="btn btn-outline-warning"
-                    onClick={this.onAddProduct}
-                  >
-                    Add
-                  </button>
+           
          
           </Row>
 
@@ -481,10 +438,10 @@ imageList = () =>{
           <br />
           <button
                     className="btn btn-outline-warning"
-                    // onClick={(this.onAddProduct) (this.onAddStock)}
+                   
                        onClick={this.onAddProduct}
                   >
-                    Add
+                    Add Address
                   </button>
          
         </Form>
@@ -492,7 +449,7 @@ imageList = () =>{
         </div>
       );
     } else {
-      return (<Redirect to="/" />);
+     // return (<Redirect to="/" />);
       
     }
   }
@@ -501,12 +458,12 @@ imageList = () =>{
 
 const mapStateToProps = state =>{
   return {
-      user: state.auth.users.username
+      user: state.auth.users.username , products: state.auth.products
   }
 }
 
 
 export default connect(
   mapStateToProps,
-   {onUploadProduct, onUpdateProduct} 
+   {onUploadProduct, onUpdateProduct, getProducts, deletProduct} 
 )(ManageProduct)
