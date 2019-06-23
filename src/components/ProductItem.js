@@ -1,7 +1,77 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+import cookies from "universal-cookie";
+
+const cookie = new cookies();
 
 class ProductItem extends Component {
+
+  state = {
+    cek: false
+  };
+
+  
+   //Fungsi Add Prodact to Cart
+  onAddToCart = prodId => {
+    const userId = cookie.get('idLogin')
+    //console.log(this.props.username);
+    console.log(userId);
+
+    const jml = parseInt(this.jumlah.value);
+    //const username = this.props.state.username;
+    if (userId) {
+    // if (this.props.username !== "") {
+      axios
+        .get(`http://localhost:2020/getProduct/${prodId}`)
+        .then(res1 => {
+          console.log(res1.data);
+
+          axios
+            .get(`http://localhost:2020/getCart/user/${userId}/prod/${prodId}`)
+            .then(res => {
+              console.log(res.data);
+              if (res.data.length !== 0) {
+                const qtyNew =
+                  parseInt(res.data[0].qty) + parseInt(this.jumlah.value);
+               
+                //axios.patch(`http://localhost:2020/carts/${userId}`, {
+                //axios.patch(`http://localhost:2020/carts/${res.data[0].id}`, {
+                axios.patch(`http://localhost:2020/updateCart/cartId/${res.data[0].id}`, {
+                  // productId: res.data[0].productId,
+                  product_id: res1.data[0].id,
+                 
+                  user_id: userId,
+                  qty: qtyNew,
+                  sisa_stock: parseInt(res1.data[0].product_stock) -  qtyNew
+                  
+                });
+              } else {
+                // else if (res.data.length > 0 && this.props.username !== "") {
+                axios
+                  .post(" http://localhost:2020/addCart", {
+                    // productId: res.data[0].productId,
+                    product_id: res1.data[0].id,
+                    //user_id: res1.data[0].user_id,
+                    user_id: userId,
+                    qty: jml,
+                    sisa_stock: parseInt(res1.data[0].product_stock) -  jml
+                  })
+
+                  .then(res => {
+                    console.log(res.data);
+                  });
+
+                // } else {
+              }
+            });
+        });
+    } else {
+      this.setState({ cek: !this.state.cek });
+    }
+  };
+
   render() {
     // distruct ==> objek item yang dibuat yang di akses dengan memasukan this.props nya ke dalam item
     const { item } = this.props;
@@ -23,13 +93,19 @@ class ProductItem extends Component {
           <p className="card-text">Stock : {item.product_stock}</p>
 
           <p className="card-text">Price : Rp. {item.product_price} </p>
-          <input className="form-control" type="number" />
+          <input 
+           ref={input => (this.jumlah = input)}
+          className="form-control" type="number" />
           <Link to={"/detailproduct/" + item.id}>
             <button className="btn btn-secondary btn-block btn-sm my-2">
               Detail
             </button>
           </Link>
-          <button className="btn btn-primary btn-block btn-sm my-2">
+          <button 
+           onClick={() => {
+            this.onAddToCart(item.id);
+          }}
+          className="btn btn-primary btn-block btn-sm my-2">
             Add to Cart
           </button>
         </div>

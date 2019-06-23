@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import axios from '../config/axios'
 import cookies from "universal-cookie";
-//import { Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 // import { onUploadProduct } from "../actions";
 
 
-import {onUploadProduct, onUpdateProduct, getProducts, deletProduct} from '../actions/index'
+import {onUploadProduct, onUpdateProduct, getProducts, deletProduct} from '../actions/product'
+// import {onUploadProduct, onUpdateProduct, getProducts, deletProduct} from '../actions/index'
 
 import {
   Col,
@@ -294,8 +295,8 @@ class ManageProduct extends Component {
 
     const id = cookie.get('idLogin')
     //if (cookie.get("masihLogin") !== undefined) {
-      if(this.props.user !==""){
-    //if (id !== undefined) {
+     // if(this.props.user !==""){
+    if (id !== undefined) {
       return (
         <div className="container manageproduct">
           <h1 className="display-4 text-center">Manage Product</h1>
@@ -449,7 +450,7 @@ class ManageProduct extends Component {
         </div>
       );
     } else {
-     // return (<Redirect to="/" />);
+     return (<Redirect to="/" />);
       
     }
   }

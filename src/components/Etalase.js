@@ -4,12 +4,17 @@ import axios from "axios";
 import ProductItem from "./ProductItem";
 import { connect } from "react-redux";
 
-import { getProducts} from '../actions/index'
+//import { getProducts} from '../actions/index'
+import { getProducts} from '../actions/product'
 
 class Etalase extends Component {
   state = {
-    //products: [],
-    productSearch: []
+    products: [],
+    productSearch: [],
+    // productSearchPop: [],
+    // productSearchRock: [],
+    // productSearchCountry: [],
+    // productSearchJazz: [],
   };
 
   componentDidMount() {
@@ -36,6 +41,8 @@ class Etalase extends Component {
     console.log(this.props.address);
     
 
+    // SERCHING ALL PRODUCTS
+
     var arrSearch = this.state.products.filter(item => {
       //return item.price <= max;
       if (isNaN(min) && isNaN(max) && product_artist === "" && product_tittle !== "") {
@@ -56,7 +63,20 @@ class Etalase extends Component {
           item.product_tittle.toLowerCase().includes(product_tittle.toLowerCase()) &&
           item.product_artist.toLowerCase().includes(product_artist.toLowerCase()) &&
           item.product_price >= min);
-      } else {
+      } 
+      // else if ((max)&&(min)) {
+      //   // jika max dan min nya tidak kosong
+      //   return (
+      //     item.product_tittle.toLowerCase().includes(product_tittle.toLowerCase()) &&
+      //     item.product_artist.toLowerCase().includes(product_artist.toLowerCase()) &&
+      //     item.product_price <= max &&
+      //     item.product_price >= min);
+      // } else {
+      //   return(
+      //     this.setState({ products: arrSearch })
+      //   )
+      // }
+      else {
         // jika max dan min nya tidak kosong
         return (
           item.product_tittle.toLowerCase().includes(product_tittle.toLowerCase()) &&
@@ -69,17 +89,74 @@ class Etalase extends Component {
     //this.setState({ products: arrSearch });
     this.setState({ productSearch: arrSearch });
   };
+
+
+  // BUTTON SEARCH GENRE
+  onBtnSearchGenre = () => {
+    const product_genre = this.genre.value;
+    
+
+    //console.log(product_genre);
+    
+
+    // SERCHING GENRE
+    if (product_genre == "pop"){
+      var arrSearchPop = this.state.products.filter(item => {
+        
+          return item.product_genre.toLowerCase().includes("pop".toLowerCase());
+       
+        
+      });
   
+      //this.setState({ products: arrSearch });
+      this.setState({ productSearchPop: arrSearchPop, productSearch: arrSearchPop });
+    } else if (product_genre == "rock") {
+    var arrSearchPop = this.state.products.filter(item => {
+     
+        return item.product_genre.toLowerCase().includes("rock".toLowerCase());
+      
+      
+    });
 
+    //this.setState({ products: arrSearch });
+    this.setState({ productSearchPop: arrSearchPop, productSearch: arrSearchPop })
+  } else if (product_genre == "country") {
+    var arrSearchPop = this.state.products.filter(item => {
+      
+        return item.product_genre.toLowerCase().includes("country".toLowerCase());
+      
+      
+    });
+
+    //this.setState({ products: arrSearch });
+    this.setState({ productSearchPop: arrSearchPop, productSearch: arrSearchPop })
+  } else if (product_genre == "jazz") {
+    var arrSearchPop = this.state.products.filter(item => {
+      
+        return item.product_genre.toLowerCase().includes("jazz".toLowerCase());
+     
+      
+    });
+
+    //this.setState({ products: arrSearch });
+    this.setState({ productSearchPop: arrSearchPop, productSearch: arrSearchPop })
+  } else {
+    return console.log("No Input");
+    
+  }
+  
+  }
+
+
+  
   renderList = () => {
-
-    // if(genre pop) {
-
-   // }
     return this.state.productSearch.map(iteem => {
       return <ProductItem item={iteem} />; // iteem merupakan tampungan dari objek products yang berisi { id:..., name:..., dec:..., price:...}
     });
   };
+
+  
+   
 
 
 
@@ -96,6 +173,23 @@ class Etalase extends Component {
                 <div className="border-bottom border-secondary card-title">
                   <h1>Search</h1>
                 </div>
+                <div className="card-title mt-1">
+                  <h4>Genre</h4>
+                </div>
+                <form className="input-group">
+                  <input
+                    ref={input => (this.genre = input)}
+                    className="form-control"
+                    // defaultValue="genre"
+                    type="text"
+                  />
+                </form>
+                <button
+                  onClick={this.onBtnSearchGenre}
+                  className="btn btn-outline-secondary btn-block mt-2 mb-5"
+                >
+                  Search Genre
+                </button>
                 <div className="card-title mt-1">
                   <h4>Tittle</h4>
                 </div>

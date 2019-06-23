@@ -7,7 +7,8 @@ import { Col, Button, Form, FormGroup, Label, Input,Row, FormText } from 'reacts
 
 import axios from '../config/axios'
 
-import {getUserAddress, addAddress} from '../actions/index'
+//import {getUserAddress, addAddress} from '../actions/index'
+import {getUserAddress, addAddress} from '../actions/address'
 
 const cookie = new cookies()
 
@@ -34,6 +35,7 @@ class AddAddress extends Component {
     const country = this.country.value;
     const postal_code = this.postalCode.value;
     const phone = this.phoneNumber.value;
+    const penerima = this.penerima.value;
     
     
     console.log("Location : " + location_name);
@@ -67,6 +69,20 @@ class AddAddress extends Component {
     <h3>Add Your Address</h3>
    <p>Click form box to add</p>
    <Form>
+     {/* <Row form>
+       <Col md={6}> */}
+        <FormGroup>
+              <Label for="exampleUsername">Penerima</Label>
+              <Input
+                innerRef={input => {
+                  this.penerima = input;
+                }}
+                type="text"
+                name="location"
+                id="exampleLocation"
+                placeholder="Nama Penerima"
+              />
+            </FormGroup>
      {/* <Row form>
        <Col md={6}> */}
         <FormGroup>

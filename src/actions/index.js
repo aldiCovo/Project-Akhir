@@ -48,6 +48,7 @@ export const onRegisterClick = (a, b, c, d, e) => {
   };
 };
 
+//
 
 export const addAddress = (location_name, street, city, province, country, postal_code, phone) => {
   return async dispatch => {
@@ -87,44 +88,46 @@ export const addAddress = (location_name, street, city, province, country, posta
   };
 };
 
+//
 
+// export const onLoginClick = (email, password) => {
+//   return async dispatch => {
+//     try {
+//       const res = await axios.post("/login", { email, password });
+//       console.log(res);
 
-export const onLoginClick = (email, password) => {
-  return async dispatch => {
-    try {
-      const res = await axios.post("/login", { email, password });
-      console.log(res);
-
-      if(!res.data.id){
-        return dispatch({
-          type: "AUTH_ERROR",
-          payload: "Email and Password is incorrect"
+//       if(!res.data.id){
+//         return dispatch({
+//           type: "AUTH_ERROR",
+//           payload: "Email and Password is incorrect"
        
-        })
+//         })
         
-      }
+//       }
       
-      //cookie.set("masihLogin", res.data.name, { path: "/" });
-      cookie.set("idLogin", res.data.id, { path: "/" });
-      cookie.set("usernameLogin", res.data.username, { path: "/" });
-      cookie.set("last_nameLogin", res.data.last_name, { path: "/" });
-      cookie.set("first_nameLogin", res.data.first_name, { path: "/" });
-      cookie.set("emailLogin", res.data.email, { path: "/" });
+//       //cookie.set("masihLogin", res.data.name, { path: "/" });
+//       cookie.set("idLogin", res.data.id, { path: "/" });
+//       cookie.set("usernameLogin", res.data.username, { path: "/" });
+//       cookie.set("last_nameLogin", res.data.last_name, { path: "/" });
+//       cookie.set("first_nameLogin", res.data.first_name, { path: "/" });
+//       cookie.set("emailLogin", res.data.email, { path: "/" });
 
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: {
-          id: res.data._id,
-          name: res.data.name,
-          age: res.data.age,
-          email: res.data.email
-        }
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-};
+//       dispatch({
+//         type: "LOGIN_SUCCESS",
+//         payload: {
+//           id: res.data._id,
+//           name: res.data.name,
+//           age: res.data.age,
+//           email: res.data.email
+//         }
+//       });
+//     } catch (e) {
+//       console.log(e);
+//     }
+//   };
+// };
+
+//
 
 export const onLogoutUser = () => {
   cookie.remove("masihLogin", { path: "/" });
@@ -138,6 +141,7 @@ export const onLogoutUser = () => {
   };
 };
 
+//
 
 // Edit data user
 export const editUserData = (username, first_name, last_name, email, password, avatar) => {
@@ -209,15 +213,17 @@ export const editUserAddress = (location_name, street, city, province, country, 
 
 
 
-export const keepLogin = (name, id, age, email) => {
-  if (name === undefined || id === undefined) {
+export const keepLogin = ( id,username,first_name, last_name, email) => {
+  if (username === undefined || id === undefined) {
     return {
       type: "KEEP_LOGIN",
       payload: {
         id: "",
-        name: "",
+        usernamename: "",
+        first_name: "",
+        last_name: "",
         email: "",
-        age: 0
+       
       }
     };
   }
@@ -226,12 +232,17 @@ export const keepLogin = (name, id, age, email) => {
     type: "KEEP_LOGIN",
     payload: {
       id,
-      name,
+     username,
+     first_name,
+     last_name,
       email,
-      age
+      
     }
   };
 };
+
+
+//
 
 // get userData(username, firstName, lastName, email, password) by userid
 export const getUser = () => {
@@ -253,6 +264,10 @@ export const getUser = () => {
   }
 }
 
+
+//
+
+
 // get userAddress by userId
 export const getUserAddress = () => {
   return async dispatch => {
@@ -273,6 +288,7 @@ export const getUserAddress = () => {
   }
 }
 
+//
 
 // get userData (username and email) => sebagai proteksi di register
 export const getAuthUser = () => {
@@ -289,7 +305,7 @@ export const getAuthUser = () => {
   }
 }
 
-
+//
 
 // PRODUCT ROUTER
 
@@ -343,6 +359,7 @@ export const onUploadProduct = (
   }
 };
 
+//
 
 // EDIT PRODUCT
 export const onUpdateProduct = (
@@ -425,5 +442,21 @@ export const deletProduct = id => {
 }
 
 
+
+//============ CART ============//
+
+// GET CART BY USER ID
+
+// export const onGetProduct = id => {
+//   console.log(id);
+//   return async dispatch => {
+//   try{
+    
+//      await axios.delete(`/getCart/${id}`)
+//     }catch (e) {
+//       console.log(e); 
+//   } 
+// } 
+// }
 
   

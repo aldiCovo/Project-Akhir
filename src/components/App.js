@@ -6,7 +6,7 @@ import Header from "./Header";
 import Home from "./Home";
 import Login from "./Login";
 import Register from "./Register";
-import { keepLogin } from "../actions";
+import { keepLogin } from "../actions/auth";
 import { connect } from "react-redux";
 import ManageProduct from "./ManageProduct";
 import Kebijakan from "./Kebijakan";
@@ -14,8 +14,10 @@ import Pop from "./Pop";
 import Rock from "./Rock";
 import Jazz from "./Jazz";
 import Country from "./Country";
+import Carts from "./Carts";
 import AllProduct from "./AllProduct";
 import Cart from "./Cart";
+import CheckOut from "./CheckOut";
 import ManageProfile from "./MangeProfile";
 import AddAddress from "./AddAddress";
 
@@ -37,12 +39,22 @@ class App extends React.Component {
     // akan dijalankan sekali ketika component di render
 
     // mengambil value yang disimpan pada file cookie masihLogin
-    var userCookie = cookie.get("masihLogin");
-    if (userCookie !== undefined) {
+    var userIdCookie = cookie.get("idLogin");
+    var userNameCookie = cookie.get("usernameLogin");
+    var firstNameCookie = cookie.get("first_nameLogin");
+    var lastNameCookie = cookie.get("last_nameLogin");
+    var emailCookie = cookie.get("emailLogin");
+    if (userIdCookie && userNameCookie && firstNameCookie && lastNameCookie && emailCookie) {
       console.log("cookie ada");
       // function keepLogin akan me-loginkan ulang username yg tersimpan pada file cookie
-      this.props.keepLogin(userCookie);
+      this.props.keepLogin(userIdCookie, userNameCookie, firstNameCookie, lastNameCookie, emailCookie);
     }
+    // var userCookie = cookie.get("masihLogin");
+    // if (userCookie !== undefined) {
+    //   console.log("cookie ada");
+    //   // function keepLogin akan me-loginkan ulang username yg tersimpan pada file cookie
+    //   this.props.keepLogin(userCookie);
+    // }
   }
   render() {
     return (
@@ -60,8 +72,10 @@ class App extends React.Component {
           <Route path="/rock" component={Rock} />
           <Route path="/jazz" component={Jazz} />
           <Route path="/country" component={Country} />
+          <Route path="/carts" component={Carts} />
           <Route path="/allproduct" component={AllProduct} />
           <Route path="/cart" component={Cart} />
+          <Route path="/checkout" component={CheckOut} />
           <Route path="/manageprofile" component={ManageProfile} />
           <Route path="/addaddress" component={AddAddress} />
           {/* <Route path="/detailproduct/:asdfg" component={DetailProduct} /> */}

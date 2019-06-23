@@ -2,19 +2,32 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { onLogoutUser } from "../actions";
+
 import cookies from "universal-cookie";
+
+//import { onLogoutUser } from "../actions";
+import { onLogoutUser } from "../actions/auth";
+import { getUser } from "../actions/user";
 
 const cookie = new cookies();
 
 class Header extends Component {
+
+  componentDidMount(){
+    this.props.getUser()
+    
+  }
+
   render() {
     console.log(this.props.user);
     
-    // const last = cookie.get('last_nameLogin')
+    //const last = cookie.get('last_nameLogin')
     const id = cookie.get('idLogin')
+    //const username = cookie.get('usernameLogin')
     if(this.props.newUser.length !==0) {
-      var { username} = this.props.newUser[0]
+      var {username} = this.props.newUser[0]
+    } else {
+      var {username} = this.props.user
     }
     
     //if (cookie.get("masihLogin") !== undefined) {
@@ -81,7 +94,7 @@ class Header extends Component {
                 </nav>
 
                 <li class="nav-item">
-                  <Link class="nav-link" to="/cart">
+                  <Link class="nav-link" to="/carts">
                     <i class="fas fa-shopping-cart" />{" "}
                     <span class="badge badge-danger">4</span>
                   </Link>
@@ -172,7 +185,7 @@ class Header extends Component {
                 </nav>
                 {/* --Cart-- */}
                 <li class="nav-item">
-                  <Link class="nav-link" to="/cart">
+                  <Link class="nav-link" to="/carts">
                     <i class="fas fa-shopping-cart" />{" "}
                     <span class="badge badge-danger">4</span>
                   </Link>
@@ -219,5 +232,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  { onLogoutUser }
+  { getUser,onLogoutUser }
 )(Header);

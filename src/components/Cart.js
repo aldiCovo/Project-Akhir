@@ -1,190 +1,169 @@
 import React, { Component } from "react";
+import axios from "axios";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import cookies from "universal-cookie";
+import CheckOut from "./CheckOut";
+import { Redirect } from "react-router-dom";
 
-//import { onLogoutUser } from "../action";
-//import { onLoginClick } from "../action";
+//import {onGetCArt} from '../actions/index'
 
-//import "../css/cart.css";
-//import closeIcon from "./icons/cross.png";
-//import Footer from "./Footer";
+const cookie = new cookies();
 
 class Cart extends Component {
-  render() {
-    const { user } = this.props;
 
-    if (user.username === "") {
+
+  state = {
+    keranjang: [],
+    flag: false,
+    //flag: true
+  }
+
+ 
+
+  // Ini jalan sekali setelah proses render pertama kali
+  componentDidMount = async () => {
+   await this.getCart();
+  }
+  
+  
+  getCart = async() => {
+
+    
+      const id = cookie.get("idLogin");
+      console.log(id);
+      
+      var res = await axios.get(`http://localhost:2020/getCart/${id}`)
+        
+          console.log(res.data);
+  
+         return this.setState({ keranjang: res.data }); // .data adalah tempat data sebenarnya yg disediakan redux / this.setState adalah function untuk set ulang perubahan ke state kemudian otomatis fn render akan dijalankan lagi
+        
+      
+  
+    };
+    
+    
+    // Fungsi Delet
+    onDeleteProduct = id => {
+      axios.delete(`http://localhost:1996/carts/${id}`).then(res => {
+        
+        this.getCart();
+      });
+    };
+    
+  renderList = () => {
+    return this.state.keranjang.map(item => {
+      // item berisi objek { id, name, desc, price, src }
+
       return (
-        <div>
-          <div className="container cart">
-            <div className="row">
-              {/* Cart List */}
-              <div className="col-6">
-                <div className="cartTitle p-2 text-center">Shopping Bag</div>
-                <div className="cartBodyTitle border-bottom border-dark mt-3 row">
-                  <div className="col-3 my-2" />
-                  <div className="col-5 my-2">Item</div>
-                  <div className="col-3 my-2 text-left">Price</div>
-                  <div className="col-1 my-2 text-left">Remove</div>
-                </div>
-                <div className="cartBody border-bottom border-dark mt-3 row">
-                  <div className="col-3">
-                    <img
-                      src="https://instagram.fcgk12-1.fna.fbcdn.net/vp/04396045afcc8817462ccd9b5a1d1101/5D2E79BE/t51.2885-15/e35/53845889_288226355408996_5928603537322301668_n.jpg?_nc_ht=instagram.fcgk12-1.fna.fbcdn.net"
-                      alt="img"
-                      className="m-1"
-                    />
-                  </div>
-                  <div className="col-5 my-1">
-                    <div>Artist : RIHANNA</div>
-                    <div>Tittle : GOOD GIRL GONE BAD</div>
-                    <div>Genre : Pop</div>
-                    <div>320212302019</div>
-                    <div className="mt-5">
-                      <a href="#">Move to Wishlist</a>
-                    </div>
-                  </div>
-                  <div className="col-3 my-1 text-left">Rp 425000</div>
-                  {/* <div className="col-1 my-1 closeIcon">
-                    <a href="#">
-                      <img className="ml-4" src={closeIcon} alt="close" />
-                    </a>
-                  </div> */}
-                </div>
-              </div>
-              {/* Checkout */}
-              <div className="col-6">
-                <div className="row">
-                  <div className="col-12">
-                    <div className="cartTitle p-2 text-center">
-                      logged in as Aldi Lukito
-                    </div>
-                    <div className="borderCheckoutLogin mt-4 border-dark">
-                      <div className="pb-2">{user.email}</div>
-                      {/* Total and Grandtotal */}
-                      <div className="cartBodyTitle mt-3 row">
-                        <div className="col-5 my-2">
-                          <div>total</div>
-                          <div>shipping estimation</div>
-                          <div>duties and taxes</div>
-                          <div className="mt-4 orderTotal">order total</div>
-                        </div>
-                        <div className="col-5 mr-auto text-right">
-                          <div>Rp 350000</div>
-                          <div>Rp 20000</div>
-                          <div>Incl.</div>
-                          <div>---</div>
-
-                          <div className="mt-4 orderTotal">Rp 350000</div>
-                        </div>
-                      </div>
-
-                      <div className="mt-4 px-5 mx-5 mb-4 text-center">
-                        <button className="buttonCheckoutLogin btn buttonCheckout btn-block btn-dark">
-                          checkout
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="footer">{/* <Footer /> */}</div>
-        </div>
+        <tr key={item.id}>
+          {/* <td>{item.productId}</td> */}
+          <td>{item.id}</td>
+          <td>{item.first_name}</td>
+          <td>{item.product_tittle}</td>
+          <td>Rp {item.product_price.toLocaleString()}</td>
+          <td>
+            <img className="list" src={`http://localhost:2020/showProdImg/${item.product_image}`} alt={item.desc} />
+          </td>
+          <td>{item.qty}</td>
+          <td>
+            {/* <button
+                onClick={() => {
+                  this.onEditProduct(item.id);
+                }}
+                className="btn btn-primary mr-2"
+                >
+                Edit
+              </button> */}
+            <button
+              onClick={() => {
+                this.onDeleteProduct(item.id);
+              }}
+              className="btn btn-danger"
+              >
+              Delete
+            </button>
+          </td>
+        </tr>
       );
-    }
-    return (
-      <div>
-        <div className="container cart">
-          <div className="row">
-            {/* Cart List */}
-            <div className="col-6">
-              <div className="cartTitle p-2 text-center">Shopping Bag</div>
-              <div className="cartBodyTitle border-bottom border-dark mt-3 row">
-                <div className="col-4 my-2" />
-                <div className="col-4 my-2">Item</div>
-                <div className="col-3 my-2 text-left">Price</div>
-                <div className="col-1 my-2 text-left">Remove</div>
-              </div>
-              <div className="cartBody border-bottom border-dark mt-3 row">
-                <div className="col-4">
-                  <img
-                    src="https://instagram.fcgk12-1.fna.fbcdn.net/vp/04396045afcc8817462ccd9b5a1d1101/5D2E79BE/t51.2885-15/e35/53845889_288226355408996_5928603537322301668_n.jpg?_nc_ht=instagram.fcgk12-1.fna.fbcdn.net"
-                    alt="img"
-                    className="m-1"
-                  />
-                </div>
-                <div className="col-4 my-1">
-                  <div>Artist : RIHANNA</div>
-                  <div>Tittle : GOOD GIRL GONE BAD</div>
-                  <div>Genre : Pop</div>
-                  <div>320212302019</div>
-                  <div className="mt-3">
-                    <a href="#">Move to Wishlist</a>
-                  </div>
-                </div>
-                <div className="col-3 my-1 text-left">Rp 425000</div>
-                {/* <div className="col-1 my-1 closeIcon">
-                <a href="#">
-                  <img className="ml-4" src={closeIcon} alt="close" />
-                </a>
-              </div> */}
-              </div>
-            </div>
-            {/* Checkout */}
-            <div className="col-6">
-              <div className="row">
-                <div className="col-12">
-                  <div className="cartTitle p-2 text-center">
-                    logged in as Aldi Lukito
-                  </div>
-                  <div className="borderCheckoutLogin mt-4 border-dark">
-                    <div className="checkoutLogin2 text-center mt-2 pt-2 px-5 mx-5">
-                      <div className="pb-2">{user.email}</div>
-                      {/* Total and Grandtotal */}
-                      <div className="cartBodyTitle mt-3 row">
-                        <div className="col-3 my-2" />
-                        <div className="col-5 my-2">
-                          <div>total</div>
-                          <div>shipping estimation</div>
-                          <div>duties and taxes</div>
-                          <div className="mt-4 orderTotal">order total</div>
-                        </div>
-                        <div className="col-2 my-2 text-right">
-                          <div>Rp 350000</div>
-                          <div>Rp 20000</div>
-                          <div>Incl.</div>
-                          <div className="mt-4 orderTotal">Rp 350000</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="mt-4 px-5 mx-5 mb-4 text-center">
-                      <button className="buttonCheckoutLogin btn buttonCheckout btn-block btn-dark">
-                        checkout
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+    });
+  };
+  
+  onCheckOut = () => {
+    this.setState({
+      flag: !this.state.flag
+    });
+  };
+  
+  // Yang dirender pertama
+  render() {
+    
+    const id = cookie.get("idLogin");
+    console.log(this.state.keranjang);
+    
+    console.log(id);
+    console.log(this.state.keranjang.length);
+
+    //if (cookie.get("masihLogin") !== undefined) {
+    if (id !== 0) {
+      console.log(id);
+      
+      console.log("if");
+      
+      if (this.state.keranjang.length !== 0) {
+        return (
+          <div className="container">
+            <h1 className="display-4 text-center">Cart List</h1>
+            <table className="table table-hover mb-5">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">NAME</th>
+                  <th scope="col">DESC</th>
+                  <th scope="col">PRICE</th>
+                  <th scope="col">PICTURE</th>
+                  <th scope="col">QTY</th>
+                  <th scope="col">ACTION</th>
+                </tr>
+              </thead>
+              <tbody>{this.renderList()}</tbody>
+            </table>
+
+            <button
+              className="btn btn-primary btn-sm m-center"
+              onClick={() => {
+                this.onCheckOut();
+              }}
+            >
+              Chekout
+            </button>
+             {/* sebelum ? itu kondisi, jika kondisi terpenuhi maka jalankan sebelum : jika tidak terpenuhi jalankan setelah tanda tanya  */}
+            {this.state.flag ? <CheckOut carts={this.state.keranjang} /> : null}
           </div>
-        </div>
-        <div className="footer">{/* <Footer /> */}</div>
-      </div>
-    );
+        );
+      } else {
+        return (
+          <div className="container text-center">
+            <h1 className="display-2 text-primary">
+              <p className="text-success">Cart belanja kosong</p>
+              <p>Belanja dulu ngapa gan...</p>
+              <p>Biar Gaul...</p>
+            </h1>
+          </div>
+        );
+      }
+    } 
   }
 }
 
-const mps = state => {
-  return { user: state.auth };
-};
+// const mapStateToProps = state => {
+//   return { username: state.auth.username };
+// };
+
+// export default connect(mapStateToProps)(Cart);
+ export default Cart
 
 // export default connect(
 //   mps,
-//   { onLogoutUser, onLoginClick }
+//   {onGetCArt}
 // )(Cart);
-export default connect(
-  mps,
-  null
-)(Cart);

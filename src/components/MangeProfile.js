@@ -4,7 +4,9 @@ import {connect} from "react-redux"
 import cookies from "universal-cookie";
 import {  Link, Redirect } from "react-router-dom";
 
-import {editUserData, editUserAddress, addAddress, getUser, getUserAddress} from '../actions/index'
+import {editUserData, getUser} from '../actions/user'
+import { editUserAddress, addAddress, getUserAddress} from '../actions/address'
+// import {editUserData, editUserAddress, addAddress, getUser, getUserAddress} from '../actions/index'
 
 const cookie = new cookies();
 
@@ -12,6 +14,7 @@ class ManageProfile extends Component {
   state = {
     profile : 0
   }
+  
   componentDidMount(){
     this.props.getUser()
     this.props.getUserAddress()
@@ -57,6 +60,7 @@ class ManageProfile extends Component {
     const country = this.country.value;
     const postal_code = this.postalCode.value;
     const phone = this.phoneNumber.value;
+    const penerima = this.penerima.value;
     
     
     console.log("Location : " + location_name);
@@ -69,6 +73,7 @@ class ManageProfile extends Component {
       country,
       postal_code,
       phone,
+      penerima
       
     );
     //this.props.getUserAddress()
@@ -85,6 +90,7 @@ class ManageProfile extends Component {
     const country = this.country.value;
     const postal_code = this.postalCode.value;
     const phone = this.phoneNumber.value;
+    const penerima = this.penerima.value;
     
     console.log("Location : " + location_name);
     console.log("Street : " + street);
@@ -97,7 +103,8 @@ class ManageProfile extends Component {
       province,
       country,
       postal_code,
-      phone
+      phone,
+      penerima
       
     );
     this.props.getUserAddress()
@@ -115,7 +122,7 @@ class ManageProfile extends Component {
 
     // Jika address sudah ada isinya
     if(this.props.newAddress.length !== this.state.profile) {
-      var {location_name, street, city, province, country, postal_code, phone } = this.props.newAddress[0]
+      var {location_name, street, city, province, country, postal_code, phone, penerima  } = this.props.newAddress[0]
       // var {location_name, street, city, province, country, postal_code, phone } = this.props.newAddress[0].data
       // var {location_name, street, city, province, country, postal_code, phone } = this.props.newAddress
       // var {location_name, street, city, province, country, postal_code, phone } = this.props.newAddress[0].config.data
@@ -278,6 +285,20 @@ class ManageProfile extends Component {
            <h3>Your Address</h3>
           <p>Click form box to edit</p>
           <Form>
+            {/* <Row form>
+              <Col md={6}> */}
+              <FormGroup>
+                  <Label for="exampleUsername">Penerima</Label>
+                  <Input
+                    innerRef={input => {
+                      this.penerima = input;
+                    }}
+                    type="text"
+                    name="location"
+                    id="exampleLocation"
+                    defaultValue={penerima}
+                  />
+                </FormGroup>
             {/* <Row form>
               <Col md={6}> */}
               <FormGroup>
@@ -574,6 +595,20 @@ class ManageProfile extends Component {
             {/* <Row form>
               <Col md={6}> */}
               <FormGroup>
+                  <Label for="exampleUsername">Penerima</Label>
+                  <Input
+                    innerRef={input => {
+                      this.penerima = input;
+                    }}
+                    type="text"
+                    name="location"
+                    id="exampleLocation"
+                    placeholder="Nama Penerima"
+                  />
+                </FormGroup>
+            {/* <Row form>
+              <Col md={6}> */}
+              <FormGroup>
                   <Label for="exampleUsername">Location</Label>
                   <Input
                     innerRef={input => {
@@ -703,6 +738,7 @@ class ManageProfile extends Component {
       );
       }else {
         return <Redirect to='/home'/>
+        // return <Redirect to='/manageproduct'/>
       
     }
 

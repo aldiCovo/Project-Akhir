@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { onLoginClick } from "../actions";
+import { onLoginClick } from "../actions/auth";
+// import { onLoginClick } from "../actions";
 //import { onSetTimeOut } from "../actions";
 
 class Login extends Component {
@@ -25,6 +26,9 @@ class Login extends Component {
     }
   };
   onSubmitClick = () => {
+    // const id = cookie.get("masihLogin");
+    // console.log(id);
+    
     const email = this.email.value;
     const pass = this.password.value;
     // console.log("Username : " + user);

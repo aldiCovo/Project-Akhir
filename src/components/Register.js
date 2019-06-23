@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { onRegisterClick } from "../actions";
+import { onRegisterClick } from "../actions/auth";
+// import { onRegisterClick } from "../actions";
 //import { onSetTimeOut } from "../actions";
 
 import {
