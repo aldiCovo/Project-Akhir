@@ -206,8 +206,14 @@ class Header extends Component {
                     <Link class="dropdown-item" to="/manageproduct">
                       Manage Product
                     </Link>
-                    <Link class="dropdown-item" to="/">
-                      Another action
+                    <Link class="dropdown-item" to="/datatransaksiadmin">
+                      Transaksi Admin
+                    </Link>
+                    <Link class="dropdown-item" to="/datatransaksiuser">
+                      Transaksi User
+                    </Link>
+                    <Link class="dropdown-item" to="/paymentnotif">
+                      Payment
                     </Link>
                     <div class="dropdown-divider" />
                     <button

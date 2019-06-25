@@ -16,10 +16,14 @@ import Jazz from "./Jazz";
 import Country from "./Country";
 import Carts from "./Carts";
 import AllProduct from "./AllProduct";
-import Cart from "./Cart";
+//import Cart from "./Cart";
 import CheckOut from "./CheckOut";
 import ManageProfile from "./MangeProfile";
 import AddAddress from "./AddAddress";
+import DataTransaksiAdmin from "./DataTransaksiAdmin";
+import DataTransaksiUser from "./DataTransaksiUser";
+import DetailProduct from "./DetailProduct";
+// import PaymentNotif from "./PaymentNotif";
 
 const cookie = new cookies();
 
@@ -74,10 +78,14 @@ class App extends React.Component {
           <Route path="/country" component={Country} />
           <Route path="/carts" component={Carts} />
           <Route path="/allproduct" component={AllProduct} />
-          <Route path="/cart" component={Cart} />
+          {/* <Route path="/cart" component={Cart} /> */}
           <Route path="/checkout" component={CheckOut} />
           <Route path="/manageprofile" component={ManageProfile} />
           <Route path="/addaddress" component={AddAddress} />
+          <Route path="/datatransaksiadmin" component={DataTransaksiAdmin} />
+          <Route path="/datatransaksiuser" component={DataTransaksiUser} />
+          <Route path="/detailproduct/:asdfg" component={DetailProduct} />
+          {/* <Route path="/paymentnotif" component={PaymentNotif} /> */}
           {/* <Route path="/detailproduct/:asdfg" component={DetailProduct} /> */}
         </div>
       </BrowserRouter>

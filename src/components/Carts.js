@@ -82,7 +82,7 @@ renderList = () => {
         <td>
           <img className="list" src={`http://localhost:2020/showProdImg/${item.product_image}`} alt={item.desc} />
         </td>
-        {/* <td>{item.product_stock}</td> */}
+        <td>{item.product_stock}</td>
         <td>{item.qty}</td>
         <td>
           {/* <button

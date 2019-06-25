@@ -114,10 +114,16 @@ class ManageProfile extends Component {
 
   render() {
     console.log(this.props.newUser);
+    console.log(this.props.newUser[0]);
+    
     //console.log(this.props.newAddress);
 
     if(this.props.newUser.length !==0) {
+     
       var {username, first_name, last_name, email, avatar} = this.props.newUser[0]
+      console.log(avatar);
+      
+      
     }
 
     // Jika address sudah ada isinya
@@ -127,7 +133,8 @@ class ManageProfile extends Component {
       // var {location_name, street, city, province, country, postal_code, phone } = this.props.newAddress
       // var {location_name, street, city, province, country, postal_code, phone } = this.props.newAddress[0].config.data
     
-    
+      console.log(avatar);
+      
       if (cookie.get("idLogin") !== undefined) {
         return (
           <div>
@@ -295,7 +302,7 @@ class ManageProfile extends Component {
                     }}
                     type="text"
                     name="location"
-                    id="exampleLocation"
+                    id="examplePenerima"
                     defaultValue={penerima}
                   />
                 </FormGroup>
@@ -434,14 +441,14 @@ class ManageProfile extends Component {
     // Jika addres belum ada isinya
      }  else {
 
-      
+      console.log(avatar);
       if (cookie.get("idLogin") !== undefined) {
         return (
           <div>
             <div className="row imgmanageprofile">
             <div className="col-4 offset-5" >
             <div class="" style={{width: "18rem"}}>
-            <img class="card-img-top" src={`http://localhost:2020/showAvatar/${avatar}`}  alt="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
+            <img class="card-img-top" src={`http://localhost:2020/showAvatar/${avatar}`}  alt={avatar}/>
     
      
     
@@ -602,7 +609,7 @@ class ManageProfile extends Component {
                     }}
                     type="text"
                     name="location"
-                    id="exampleLocation"
+                    id="examplePenerima"
                     placeholder="Nama Penerima"
                   />
                 </FormGroup>

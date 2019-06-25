@@ -82,6 +82,7 @@ export const onUpdateProduct = (
   
        
         const res = await axios.patch(`/updateProd/${id}/product_image`,formData, {
+       
           headers: {
               'Content-Type': 'multipart/form-data'
           }

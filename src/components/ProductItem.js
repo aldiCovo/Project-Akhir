@@ -13,6 +13,10 @@ class ProductItem extends Component {
   };
 
   
+  onEditProduct = id => {
+    this.props.onUpdateProduct(id)
+  };
+
    //Fungsi Add Prodact to Cart
   onAddToCart = prodId => {
     const userId = cookie.get('idLogin')
@@ -20,6 +24,10 @@ class ProductItem extends Component {
     console.log(userId);
 
     const jml = parseInt(this.jumlah.value);
+    // const prdId = res1.data[0].id
+    // const qtyNew =  parseInt(res.data[0].qty) + parseInt(this.jumlah.value); 
+    // const ssSt1 =  parseInt(res1.data[0].product_stock) -  qtyNew
+    // const ssSt2 = parseInt(res1.data[0].product_stock) -  jml
     //const username = this.props.state.username;
     if (userId) {
     // if (this.props.username !== "") {
@@ -27,7 +35,7 @@ class ProductItem extends Component {
         .get(`http://localhost:2020/getProduct/${prodId}`)
         .then(res1 => {
           console.log(res1.data);
-
+          
           axios
             .get(`http://localhost:2020/getCart/user/${userId}/prod/${prodId}`)
             .then(res => {
@@ -38,7 +46,7 @@ class ProductItem extends Component {
                
                 //axios.patch(`http://localhost:2020/carts/${userId}`, {
                 //axios.patch(`http://localhost:2020/carts/${res.data[0].id}`, {
-                axios.patch(`http://localhost:2020/updateCart/cartId/${res.data[0].id}`, {
+                axios.patch(`http://localhost:2020/updateCart/cartId/${prodId}`, {
                   // productId: res.data[0].productId,
                   product_id: res1.data[0].id,
                  
@@ -46,7 +54,12 @@ class ProductItem extends Component {
                   qty: qtyNew,
                   sisa_stock: parseInt(res1.data[0].product_stock) -  qtyNew
                   
-                });
+                }).then(res=>{
+                  axios.patch(`http://localhost:2020/updateProd/${prodId}/product_image`,{
+                    product_stock : parseInt(res1.data[0].product_stock) -  qtyNew
+                  })
+
+                })
               } else {
                 // else if (res.data.length > 0 && this.props.username !== "") {
                 axios
@@ -61,7 +74,12 @@ class ProductItem extends Component {
 
                   .then(res => {
                     console.log(res.data);
-                  });
+                  }).then(res=>{
+                    axios.patch(`http://localhost:2020/updateProd/${res1.data[0].id}/product_image`,{
+                      product_stock : parseInt(res1.data[0].product_stock) -  jml
+                    })
+  
+                  })
 
                 // } else {
               }
@@ -74,43 +92,88 @@ class ProductItem extends Component {
 
   render() {
     // distruct ==> objek item yang dibuat yang di akses dengan memasukan this.props nya ke dalam item
+    const id = cookie.get('idLogin')
     const { item } = this.props;
-    return (
-      <div
-        className="card col-3 m-1"
-        style={{ width: "18rem" }}
-        key={item.id}
-      >
-        <img src={`http://localhost:2020/showProdImg/${item.product_image}`} className="card-img-top-center" alt={item.name} />
-        <div className="card-body">
-          <h5 className="card-title">{item.product_tittle}</h5>
+    if(id){
 
-          <p className="card-title">Artist : {item.product_artist}</p>
-          {/* <p className="card-text">{item.desc}</p> */}
-
-          <p className="card-text">Genre : {item.product_genre}</p>
-
-          <p className="card-text">Stock : {item.product_stock}</p>
-
-          <p className="card-text">Price : Rp. {item.product_price} </p>
-          <input 
-           ref={input => (this.jumlah = input)}
-          className="form-control" type="number" />
-          <Link to={"/detailproduct/" + item.id}>
-            <button className="btn btn-secondary btn-block btn-sm my-2">
-              Detail
+      return (
+        <div
+          className="card col-3 m-1"
+          style={{ width: "18rem" }}
+          key={item.id}
+        >
+          <img src={`http://localhost:2020/showProdImg/${item.product_image}`} className="card-img-top-center" alt={item.name} />
+          <div className="card-body">
+            <h5 className="card-title">{item.product_tittle}</h5>
+  
+            <p className="card-title">Artist : {item.product_artist}</p>
+            {/* <p className="card-text">{item.desc}</p> */}
+  
+            <p className="card-text">Genre : {item.product_genre}</p>
+  
+            <p className="card-text">Stock : {item.product_stock}</p>
+  
+            <p className="card-text">Price : Rp. {item.product_price} </p>
+            <input 
+             ref={input => (this.jumlah = input)}
+            className="form-control" type="number" />
+            <Link to={"/detailproduct/" + item.id}>
+              <button className="btn btn-secondary btn-block btn-sm my-2">
+                Detail
+              </button>
+            </Link>
+            <button 
+             onClick={() => {
+              this.onAddToCart(item.id);
+            }}
+            className="btn btn-primary btn-block btn-sm my-2">
+              Add to Cart
             </button>
-          </Link>
-          <button 
-           onClick={() => {
-            this.onAddToCart(item.id);
-          }}
-          className="btn btn-primary btn-block btn-sm my-2">
-            Add to Cart
-          </button>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+
+      return (
+        <div
+          className="card col-3 m-1"
+          style={{ width: "18rem" }}
+          key={item.id}
+        >
+          <img src={`http://localhost:2020/showProdImg/${item.product_image}`} className="card-img-top-center" alt={item.name} />
+          <div className="card-body">
+            <h5 className="card-title">{item.product_tittle}</h5>
+  
+            <p className="card-title">Artist : {item.product_artist}</p>
+            {/* <p className="card-text">{item.desc}</p> */}
+  
+            <p className="card-text">Genre : {item.product_genre}</p>
+  
+            <p className="card-text">Stock : {item.product_stock}</p>
+  
+            <p className="card-text">Price : Rp. {item.product_price} </p>
+            <input 
+             ref={input => (this.jumlah = input)}
+            className="form-control" type="number" />
+            <Link to={"/detailproduct/" + item.id}>
+              <button className="btn btn-secondary btn-block btn-sm my-2">
+                Detail
+              </button>
+            </Link>
+            <Link to="/login">
+            <button 
+            //  onClick={() => {
+            //   this.onAddToCart(item.id);
+            // }}
+            className="btn btn-primary btn-block btn-sm my-2">
+              Add to Cart
+            </button>
+            </Link>
+          </div>
+        </div>
+      );
+
+    }
   }
 }
 

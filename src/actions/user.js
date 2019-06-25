@@ -15,10 +15,16 @@ export const editUserData = (username, first_name, last_name, email, password, a
         formData.append('last_name', last_name)
         formData.append('email', email)
         formData.append('password', password)
+
+        if(avatar){
         formData.append('avatar', avatar)
-  
+        }
         const userId = cookie.get("idLogin")
+
+        // /updateuser/:userId/avatar/new
         const res = await axios.patch(`/updateuser/${userId}/avatar`,formData, {
+          // don
+       // const res = await axios.patch(`/updateuser/${userId}/avatar/new`,formData, {
           headers: {
               'Content-Type': 'multipart/form-data'
           }
@@ -26,6 +32,8 @@ export const editUserData = (username, first_name, last_name, email, password, a
         console.log(res);
   
         if(res.data[0].username){
+        //if(res.data[0].userId){
+        //if(userId){
           return dispatch ({
             type: "EDIT_USERDATA",
             payload: res

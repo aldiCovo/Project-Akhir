@@ -442,7 +442,7 @@ class ManageProduct extends Component {
                    
                        onClick={this.onAddProduct}
                   >
-                    Add Address
+                    Add Product
                   </button>
          
         </Form>
@@ -450,7 +450,8 @@ class ManageProduct extends Component {
         </div>
       );
     } else {
-     return (<Redirect to="/" />);
+    //  return (<Redirect to="/" />);
+      return null
       
     }
   }

@@ -28,6 +28,7 @@ class AddAddress extends Component {
 
     // Add data User jika user belum input addres
   onAddAddressClick = () => {
+    
     const location_name = this.location.value;
     const street = this.street.value;
     const city = this.city.value;
@@ -41,6 +42,7 @@ class AddAddress extends Component {
     console.log("Location : " + location_name);
     console.log("Street : " + street);
     this.props.addAddress(
+      
       location_name,
       street,
       city,
@@ -48,7 +50,7 @@ class AddAddress extends Component {
       country,
       postal_code,
       phone,
-      
+      penerima,
     );
     //this.props.getUserAddress()
     this.setState({ profile: 1 });

@@ -191,16 +191,56 @@ order =()=>{
     //     })
     //    })
       
-      .then(resOrderItem=>{
-        axios.delete(`http://localhost:2020/deleteCart/${this.props.carts[i].id}`)
-      .then(res=>{
-        console.log(res);
-        this.props.test()
-      })
+    // Delete carts
+      // .then(resOrderItem=>{
+      //   axios.delete(`http://localhost:2020/deleteCart/${this.props.carts[i].id}`)
+      // .then(res=>{
+      //   console.log(res);
+      //   this.props.test()
+      // })
 
-      })
+     // })
 
+      // update data stock in td_stocks by prod_id
       
+      const product_stock = this.props.carts[i].product_stock
+      console.log(product_stock);
+      
+      const stok_keluar = this.props.carts[i].qty
+      console.log(stok_keluar);
+      
+      const stok_baru = parseInt(product_stock-stok_keluar) 
+      console.log(stok_baru);
+
+      const product_tittle = this.props.carts[i].product_tittle
+      const product_artist = this.props.carts[i].product_artist
+      const product_desc = this.props.carts[i].product_desc
+      const product_genre = this.props.carts[i].product_genre
+      const product_price = this.props.carts[i].product_price
+      
+
+      if(this.props.carts.length >0){
+        let prodId = this.props.carts[i].product_id
+        console.log(prodId);
+        
+        axios.patch(`http://localhost:2020/updateProd/${prodId}/product_image`,{
+
+          product_stock: stok_baru,
+          product_tittle,
+          product_artist,
+          product_desc,
+          product_genre,
+          product_price
+
+        })
+        .then(resOrderItem=>{
+          axios.delete(`http://localhost:2020/deleteCart/${this.props.carts[i].id}`)
+        })
+        .then(res=>{
+          console.log(res);
+          this.props.test()
+        })
+      }    
   }
 
   
@@ -294,7 +334,8 @@ order =()=>{
     if(this.state.addressCart.length !== 0){
       var {city, street, country, postal_code, province, phone, location_name, penerima} = this.state.addressCart[0]
       console.log(this.state.addressCart[0].city);
-    }
+   // }
+  
     
 
     if(this.props.newUser.length !==0) {
@@ -494,14 +535,16 @@ order =()=>{
                   // defaultValue={profile.email}
                 /> */}
                 {email}
-                <button
+              
+                {/* <button
                   className="btn btn-primary mr-2"
                   // onClick={() => {
                   //   this.onSaveProfiles(profile.username);
                   // }}
                 >
                   Add Address
-                </button>
+                </button> */}
+                <Link class="nav-link" to="/manageprofile">
                 <button
                   className="btn btn-primary mr-2"
                   // onClick={() => {
@@ -510,6 +553,8 @@ order =()=>{
                 >
                   Edit Data
                 </button>
+                </Link>
+                <Link class="nav-link" to="/allproduct">
                 <button
                   // onClick={() => {
                   //   this.setState({ selectedId: 0 });
@@ -521,6 +566,7 @@ order =()=>{
                 >
                  Procces
                 </button>
+                </Link>
               </div>
             </div>
           </main>
@@ -528,6 +574,239 @@ order =()=>{
         </div>
       </div>
     );
+    // Saat user belum isi address
+  }else{
+   
+
+    return (
+      <div className="text-center">
+        <h1 className="display-4 text-center font-weight-bold">TOTAL</h1>
+        <table className="table table-hover mb-5">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">TITTLE</th>
+              <th scope="col">PRICE</th>
+              <th scope="col">QTY</th>
+              <th scope="col">SISA STOCK</th>
+              <th scope="col">TOTAL</th>
+            </tr>
+          </thead>
+          <tbody>{this.onMapCart()}</tbody>
+          <thead>
+            <tr>
+            
+              <th scope="col">Jenis Pengiriman</th>
+              <th scope="col"><select className="form-control" ref={select=>{this.pengiriman = select}}>
+                <option value="0" >Select</option>
+                <option  value="1">JNE YES</option>
+                <option  value="2">JNE Reguler</option>
+                <option  value="3">Tiki ONS</option>
+                <option  value="4">Tiki Reguler</option>
+                <option  value="5">JNT Reguler</option>
+                <option  value="6">JNT Reguler</option>
+                </select></th>
+              <th scope="col"> 
+              <button
+              className="btn btn-primary btn-sm m-center"
+              onClick={() => {
+                this.shiping();
+              }}
+            >
+            Confrim
+            </button>
+              </th>
+              <th scope="col">
+              {console.log(this.state.kur)}
+              {this.state.kur}
+              
+              </th>
+              <th scope="col">
+                {console.log(this.state.okr)}
+                Rp {this.state.okr}
+              </th>
+            </tr>
+          </thead>
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col">BANK</th>
+              <th scope="col">NO REK</th>
+            </tr>
+          </thead>
+          <thead>
+            <tr>
+              <th scope="col">PEMBAYARAN</th>
+              <th scope="col">
+              <select className="form-control" ref={select=>{this.pembayaran = select}}>
+                <option value="0" >Transfer Via</option>
+                <option  value="1">BCA</option>
+                <option  value="2">BNI</option>
+                <option  value="3">BRI</option>
+                <option  value="4">MANDIRI</option>
+                
+                </select>
+              </th>
+
+              <th scope="col"> 
+
+              <button
+              className="btn btn-primary btn-sm m-center"
+              onClick={() => {
+                this.transfer();
+              }}
+            >
+            Confrim
+            </button>
+
+              </th>
+              <th scope="col">
+              {this.state.bnk}
+              </th>
+              <th scope="col">
+                {this.state.rek}
+              </th>
+            </tr>
+          </thead>
+        </table>
+        <div>
+          <span className="font-weight-bold">TOTAL BAYAR :</span>
+              <h4>
+                
+              Rp{" "}
+         
+              {this.totalOngkir()} {"  "} ( Total Prodak : Rp {this.onHargaTotal()} + Ongkir : Rp {this.state.okr})
+              </h4>
+        </div>
+        <div>
+          {/* <h4>
+              DATA PENGIRIMAN :
+          </h4> */}
+        </div>
+
+        {/* ------DETAIL DATA USER------ */}
+        <div>
+        <main className="mt-5 pt-4">
+            <div className="container wow fadeIn">
+              <h2 className="my-3 h2 text-center"> DATA PENGIRIMAN :</h2>
+              {/* <h2 className="my-3 h2 text-center">{profile.first_name}'s Profile</h2> */}
+              <div className="card container">
+               
+                <strong>
+                  <label>Pemesan</label>
+                </strong>
+                <div>
+                  {/* <input
+                    ref={input => (this.firstname = input)}
+                    className="form-control "
+                    type="text"
+                    // defaultValue={profile.first_name}
+                  /> */}
+                  {first_name} {last_name}
+                </div>
+                <strong>
+                  <label>Penerima</label>
+                </strong>
+                <div>
+                  {/* <input
+                    ref={input => (this.lastname = input)}
+                    className="form-control"
+                    type="text"
+                    // defaultValue={profile.last_name}
+                  /> */}
+                  {penerima}
+                </div>
+
+                <strong>
+                  <label>Address</label>
+                </strong>
+                <div>
+                  {/* <input
+                    ref={input => (this.address = input)}
+                    className="form-control"
+                    type="text"
+                    // defaultValue={profile.address}
+                  /> */}
+                  {/* <h6>{console.log(this.state.addressCart[0].street)}</h6>; */}
+                 {location_name} {street} {city} {province} {country}
+                </div>
+                <strong>
+                  <label>Pos Code</label>
+                </strong>
+                <div>
+                  {/* <input
+                    ref={input => (this.phone = input)}
+                    className="form-control"
+                    type="text"
+                    // defaultValue={profile.telephone}
+                  /> */}
+                  {postal_code}
+                </div>
+                <strong>
+                  <label>Phone</label>
+                </strong>
+                <div>
+                  {/* <input
+                    ref={input => (this.phone = input)}
+                    className="form-control"
+                    type="text"
+                    // defaultValue={profile.telephone}
+                  /> */}
+                  {phone}
+                </div>
+                <strong>
+                  <label>Email</label>
+                </strong>
+                {/* <input
+                  ref={input => (this.email = input)}
+                  className="form-control"
+                  type="email"
+                  // defaultValue={profile.email}
+                /> */}
+                {email}
+                <Link class="nav-link" to="/addaddress"> 
+                <button
+                  className="btn btn-primary mr-2"
+                  // onClick={() => {
+                  //   this.onSaveProfiles(profile.username);
+                  // }}
+                >
+                  Add Address
+                </button>
+                </Link> 
+                {/* <Link class="nav-link" to="/manageprofile"> */}
+                {/* <button
+                  className="btn btn-primary mr-2"
+                  // onClick={() => {
+                  //   this.onSaveProfiles(profile.username);
+                  // }}
+                >
+                  Edit Data
+                </button> */}
+                {/* </Link> */}
+                {/* <button
+                  // onClick={() => {
+                  //   this.setState({ selectedId: 0 });
+                  // }}
+                  onClick={() => {
+                    this.order();
+                  }}
+                  className="btn btn-danger"
+                >
+                 Procces
+                </button> */}
+              </div>
+            </div>
+          </main>
+
+        </div>
+      </div>
+    );
+
+
+  }
   }
 }
 

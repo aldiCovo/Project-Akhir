@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import Etalase from "./Etalase";
+ import Etalase from "./Etalase";
 import { Link /*,Redirect*/ } from "react-router-dom";
 //import { Media } from "reactstrap";
 
@@ -89,7 +89,7 @@ class Home extends Component {
             <div className="col-10">Deskripsi usaha</div>
           </div>
         </div>
-        <div className="container">{/* <Etalase /> */}</div>
+        <div className="container"><Etalase /> </div>
       </div>
     );
   }
