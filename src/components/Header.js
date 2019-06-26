@@ -118,7 +118,7 @@ class Header extends Component {
     } else {
       return (
         <div>
-          <Redirect to="/" />
+          {/* <Redirect to="/" /> */}
           {/* <nav class="navbar navbar-expand-lg navbar-light bg-light"> */}
           <nav class="navbar navbar-expand-lg  fixed-top text-light">
             <Link class="navbar-brand" to="/">

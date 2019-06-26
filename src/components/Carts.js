@@ -127,7 +127,7 @@ onCheckOut = () => {
     console.log(this.state.keranjang.length);
 
     if (id) {
-        if (this.state.keranjang.length !== 0) { 
+      if (this.state.keranjang.length !== 0) { 
 
     return (
       

@@ -45,6 +45,7 @@ class Etalase extends Component {
 
     var arrSearch = this.state.products.filter(item => {
       //return item.price <= max;
+      // isNaN(min) = kalau isi min nya selaian number = true
       if (isNaN(min) && isNaN(max) && product_artist === "" && product_tittle !== "") {
         // search hanya dengan tittle lalu artist, min dan max kosong
         return item.product_tittle.toLowerCase().includes(product_tittle.toLowerCase());
