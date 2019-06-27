@@ -105,6 +105,7 @@ class ManageProduct extends Component {
       // item berisi objek { id, name, desc, price, src }
       //if (this.state.dataTransOpc.length !== 0){
         if (item.payment_stat === "paid") {
+          // Kondisi saat tekan tombol uploads
           if (item.id !== this.state.selectedId) {
             //kondisi saat normal atau tidak tekan tombol edit
             return (

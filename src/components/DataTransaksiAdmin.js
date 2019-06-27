@@ -269,7 +269,7 @@ class ManageProduct extends Component {
             <td>{item.product_artist}</td>
             <td>{item.product_tittle}</td>
           
-            <td><img src={`http://localhost:2020/showBuktiTrf/${item.product_image}`} alt={item.product_tittle} className="list"></img></td>
+            <td><img src={`http://localhost:2020/showProdImg/${item.product_image}`} alt={item.product_tittle} className="list"></img></td>
             <td>{item.product_price}</td>
             <td>{item.qty}</td>
             <td>{item.total_price}</td>
@@ -282,6 +282,8 @@ class ManageProduct extends Component {
     });
   };
 
+
+  
   // Yang dirender pertama
   render() {
     //var userCookie = cookie.get("masihLogin");
@@ -290,7 +292,7 @@ class ManageProduct extends Component {
     const id = cookie.get('idLogin')
     //if (cookie.get("masihLogin") !== undefined) {
      // if(this.props.user !==""){
-    if (id !== undefined) {
+    if (id === 10) {
       return (
         <div className="container manageproduct">
           <h1 className="display-4 text-center">DATA TRANSSACTION JOURNAL</h1>

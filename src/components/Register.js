@@ -59,132 +59,139 @@ class Register extends Component {
     );
   };
   render() {
-    return (
-      // <div className="register">
-      <div className="container  bg-transparent text-dark register1 rounded">
-        {/* <div className="register1"> */}
-        {/* <div class="col-lg-4 offset-4 mt-5">
-          <div class="card bg-light text-center card-form" /> */}
-        <h3>Sign Up Today</h3>
-        <p>Please fill out this form to register</p>
-        <Form>
-          <Row form>
-            <Col md={6}>
-            <FormGroup>
-                <Label for="exampleUsername">Username</Label>
-                <Input
-                  innerRef={input => {
-                    this.username = input;
-                  }}
-                  type="text"
-                  name="username"
-                  id="exampleUsername"
-                  placeholder="Username"
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-
-          <Row form>
-            <Col md={6}>
+    if(this.props.username === "" && this.props.email  === "" ){
+      
+      return (
+        // <div className="register">
+        <div className="container  bg-transparent text-dark register1 rounded">
+          {/* <div className="register1"> */}
+          {/* <div class="col-lg-4 offset-4 mt-5">
+            <div class="card bg-light text-center card-form" /> */}
+          <h3>Sign Up Today</h3>
+          <p>Please fill out this form to register</p>
+          <Form>
+            <Row form>
+              <Col md={6}>
               <FormGroup>
-                <Label for="exampleFirst">First Name</Label>
-                <Input
-                  innerRef={input => {
-                    this.firstName = input;
-                  }}
-                  type="text"
-                  name="firstname"
-                  id="exampleFirst"
-                  placeholder="first name"
-                />
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="exampleLast">Last Name</Label>
-                <Input
-                  innerRef={input => {
-                    this.lastName = input;
-                  }}
-                  type="text"
-                  name="password"
-                  id="exampleLast"
-                  placeholder="last name"
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-          <Row form>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="exampleEmail">Email</Label>
-                <Input
-                  innerRef={input => {
-                    this.email = input;
-                  }}
-                  type="email"
-                  name="email"
-                  id="exampleEmail"
-                  placeholder="@ Email"
-                />
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="examplePassword">Password</Label>
-                <Input
-                  innerRef={input => {
-                    this.password = input;
-                  }}
-                  type="password"
-                  name="password"
-                  id="examplePassword"
-                  placeholder="password"
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-          
-          <Row form>
-            <Col md={2}>
-              <FormGroup>
-                <Label for="exampleDate">Brith Date</Label>
-                <Input
-                  type="date"
-                  name="date"
-                  id="exampleDate"
-                  placeholder="date placeholder"
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-         
-          <FormGroup check>
-            <Input type="checkbox" name="check" id="exampleCheck" />
-            <Label for="exampleCheck" check>
-              By selecting "Register" I agree to Circleline record's{" "}
-              <Link to="/kebijakan">Privacy Policy</Link>
-            </Label>
-          </FormGroup>
-          <br />
-          <Button onClick={this.onSubmitClick}>Register</Button>
-          {this.onErrorRegister()}
-          <p className="lead">
-            Do You Have Account Bro? <Link to="/login">Sign Up!</Link>
-          </p>
-        </Form>
-      </div>
-      // </div>
-      // </div>
-    );
+                  <Label for="exampleUsername">Username</Label>
+                  <Input
+                    innerRef={input => {
+                      this.username = input;
+                    }}
+                    type="text"
+                    name="username"
+                    id="exampleUsername"
+                    placeholder="Username"
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+  
+            <Row form>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="exampleFirst">First Name</Label>
+                  <Input
+                    innerRef={input => {
+                      this.firstName = input;
+                    }}
+                    type="text"
+                    name="firstname"
+                    id="exampleFirst"
+                    placeholder="first name"
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="exampleLast">Last Name</Label>
+                  <Input
+                    innerRef={input => {
+                      this.lastName = input;
+                    }}
+                    type="text"
+                    name="password"
+                    id="exampleLast"
+                    placeholder="last name"
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row form>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="exampleEmail">Email</Label>
+                  <Input
+                    innerRef={input => {
+                      this.email = input;
+                    }}
+                    type="email"
+                    name="email"
+                    id="exampleEmail"
+                    placeholder="@ Email"
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="examplePassword">Password</Label>
+                  <Input
+                    innerRef={input => {
+                      this.password = input;
+                    }}
+                    type="password"
+                    name="password"
+                    id="examplePassword"
+                    placeholder="password"
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            
+            <Row form>
+              <Col md={2}>
+                <FormGroup>
+                  <Label for="exampleDate">Brith Date</Label>
+                  <Input
+                    type="date"
+                    name="date"
+                    id="exampleDate"
+                    placeholder="date placeholder"
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+           
+            <FormGroup check>
+              <Input type="checkbox" name="check" id="exampleCheck" />
+              <Label for="exampleCheck" check>
+                By selecting "Register" I agree to Circleline record's{" "}
+                <Link to="/kebijakan">Privacy Policy</Link>
+              </Label>
+            </FormGroup>
+            <br />
+            <Button onClick={this.onSubmitClick}>Register</Button>
+            {this.onErrorRegister()}
+            <p className="lead">
+              Do You Have Account Bro? <Link to="/login">Sign Up!</Link>
+            </p>
+          </Form>
+        </div>
+        // </div>
+        // </div>
+      );
+    } else {
+      return <Redirect to="/" />;
+    }
   }
 }
 
 const mapStateToProps = state => {
   return {
     error: state.auth.error,
-    success: state.auth.success
+    success: state.auth.success,
+    username: state.auth.username,
+    email: state.auth.email
   };
 };
 

@@ -3,6 +3,7 @@ import { Col, Button, Form, FormGroup, Label, Input,Row, FormText } from 'reacts
 import {connect} from "react-redux"
 import cookies from "universal-cookie";
 import {  Link, Redirect } from "react-router-dom";
+import axios from '../config/axios'
 
 import {editUserData, getUser} from '../actions/user'
 import { editUserAddress, addAddress, getUserAddress} from '../actions/address'
@@ -15,6 +16,16 @@ class ManageProfile extends Component {
     profile : 0
   }
   
+
+  onDeleteAvatar = async () => {
+   
+    const userId = cookie.get('idLogin')
+
+    var res = await axios.post(`http://localhost:2020/deleteavatar/${userId}`)
+    this.props.getUser()
+};
+
+
   componentDidMount(){
     this.props.getUser()
     this.props.getUserAddress()
@@ -142,12 +153,15 @@ class ManageProfile extends Component {
             <div className="col-4 offset-5" >
             <div class="" style={{width: "18rem"}}>
             <img class="card-img-top" src={`http://localhost:2020/showAvatar/${avatar}`}  alt="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
-    
-     
+           
+            <div>
+            <Button className="btn btn-danger" onClick={this.onDeleteAvatar} >Delete Image</Button>
+            </div>
     
    </div>
   
             </div>
+            
             </div>
          
           <div className="row">
@@ -450,11 +464,14 @@ class ManageProfile extends Component {
             <div class="" style={{width: "18rem"}}>
             <img class="card-img-top" src={`http://localhost:2020/showAvatar/${avatar}`}  alt={avatar}/>
     
-     
-    
+            
+            <div>
+            <Button className="btn btn-danger" onClick={this.onDeleteAvatar} >Delete Image</Button>
+            </div>
    </div>
   
             </div>
+            
             </div>
          
           <div className="row">

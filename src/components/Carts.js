@@ -176,7 +176,7 @@ onCheckOut = () => {
             >
               Chekout
             </button>
-             {/* sebelum ? itu kondisi, jika kondisi terpenuhi maka jalankan sebelum : jika tidak terpenuhi jalankan setelah tanda tanya  */}
+             {/* sebelum ? itu kondisi true apa false, jika kondisi terpenuhi maka jalankan sebelum : jika tidak terpenuhi jalankan setelah tanda tanya  */}
             {this.state.flag ? <CheckOut test={this.test} carts={this.state.keranjang} alamat={this.state.addressCart} /> : null}
           </div>
        

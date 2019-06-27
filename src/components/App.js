@@ -85,6 +85,7 @@ class App extends React.Component {
           <Route path="/datatransaksiadmin" component={DataTransaksiAdmin} />
           <Route path="/datatransaksiuser" component={DataTransaksiUser} />
           <Route path="/detailproduct/:asdfg" component={DetailProduct} />
+          {/* <Route path="//:asdfg" component={DetailProduct} /> */}
           {/* <Route path="/paymentnotif" component={PaymentNotif} /> */}
           {/* <Route path="/detailproduct/:asdfg" component={DetailProduct} /> */}
         </div>

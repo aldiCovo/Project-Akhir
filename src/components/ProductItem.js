@@ -115,6 +115,7 @@ class ProductItem extends Component {
   
             <p className="card-text">Price : Rp. {item.product_price} </p>
             <input 
+              min={0}
              ref={input => (this.jumlah = input)}
             className="form-control" type="number" />
             <Link to={"/detailproduct/" + item.id}>

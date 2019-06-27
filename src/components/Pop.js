@@ -1,155 +1,261 @@
-import axios from "axios";
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
-import cookies from "universal-cookie";
-import CheckOut from "./CheckOut";
+import axios from "axios";
 
-const cookie = new cookies();
+import ProductItem from "./ProductItem";
+import { connect } from "react-redux";
+
+//import { getProducts} from '../actions/index'
+import { getProducts} from '../actions/product'
 
 class Pop extends Component {
-
   state = {
-    keranjang: [],
-    flag: false,
-    //flag: true
+    products: [],
+    productSearch: [],
+    // productSearchPop: [],
+    // productSearchRock: [],
+    // productSearchCountry: [],
+    // productSearchJazz: [],
+  };
+
+  componentDidMount() {
+    this.getProductSearch();
+    
   }
 
- // Ini jalan sekali setelah proses render pertama kali
- componentDidMount = async () => {
-  await this.getCart();
- }
- 
- getCart = async() => {
+  getProductSearch = () => {
+    axios.get('http://localhost:2020/getProduct').then(res => {
+      
+      this.setState({ products: res.data, productSearch: res.data });
+    });
+  };
 
+
+  onBtnSearch = () => {
+    const product_tittle = this.tittle.value;
+    const product_artist = this.artist.value;
+    const min = parseInt(this.min.value);
+    const max = parseInt(this.max.value);
+
+    console.log(product_tittle);
+    console.log(product_artist);
+    console.log(this.props.address);
     
-  const id = cookie.get("idLogin");
-  console.log(id);
+
+    // SERCHING ALL PRODUCTS
+
+    var arrSearch = this.state.products.filter(item => {
+      //return item.price <= max;
+      // isNaN(min) = kalau isi min nya selaian number = true
+      if (isNaN(min) && isNaN(max) && product_artist === "" && product_tittle !== "") {
+        // search hanya dengan tittle lalu artist, min dan max kosong
+        return item.product_tittle.toLowerCase().includes(product_tittle.toLowerCase());
+      } else if (isNaN(min) && isNaN(max) && product_tittle === "" && product_artist !== "" ) {
+         // search hanya dengan artist lalu tittle, min dan max kosong
+         return item.product_artist.toLowerCase().includes(product_artist.toLowerCase());
+      } else if (isNaN(min)) {
+        // jika minya kosong lalu tittle, artist dan max ada
+        return (
+          item.product_tittle.toLowerCase().includes(product_tittle.toLowerCase()) &&
+          item.product_artist.toLowerCase().includes(product_artist.toLowerCase()) &&
+          item.product_price <= max);
+      } else if (isNaN(max)) {
+        // jika max nya kosong lalu tittle, artist dan min ada
+        return (
+          item.product_tittle.toLowerCase().includes(product_tittle.toLowerCase()) &&
+          item.product_artist.toLowerCase().includes(product_artist.toLowerCase()) &&
+          item.product_price >= min);
+      } 
+      // else if ((max)&&(min)) {
+      //   // jika max dan min nya tidak kosong
+      //   return (
+      //     item.product_tittle.toLowerCase().includes(product_tittle.toLowerCase()) &&
+      //     item.product_artist.toLowerCase().includes(product_artist.toLowerCase()) &&
+      //     item.product_price <= max &&
+      //     item.product_price >= min);
+      // } else {
+      //   return(
+      //     this.setState({ products: arrSearch })
+      //   )
+      // }
+      else {
+        // jika max dan min nya tidak kosong
+        return (
+          item.product_tittle.toLowerCase().includes(product_tittle.toLowerCase()) &&
+          item.product_artist.toLowerCase().includes(product_artist.toLowerCase()) &&
+          item.product_price <= max &&
+          item.product_price >= min);
+      }
+    });
+
+    //this.setState({ products: arrSearch });
+    this.setState({ productSearch: arrSearch });
+  };
+
+
+  // BUTTON SEARCH GENRE
+  onBtnSearchGenre = () => {
+    const product_genre = this.genre.value;
+    
+
+    //console.log(product_genre);
+    
+
+    // SERCHING GENRE
+    if (product_genre == "pop"){
+      var arrSearchPop = this.state.products.filter(item => {
+        
+          return item.product_genre.toLowerCase().includes("pop".toLowerCase());
+       
+        
+      });
   
-  var res = await axios.get(`http://localhost:2020/getCart/${id}`)
-    
-      console.log(res.data);
+      //this.setState({ products: arrSearch });
+      this.setState({ productSearchPop: arrSearchPop, productSearch: arrSearchPop });
+    } else if (product_genre == "rock") {
+    var arrSearchPop = this.state.products.filter(item => {
+     
+        return item.product_genre.toLowerCase().includes("rock".toLowerCase());
+      
+      
+    });
 
-     return this.setState({ keranjang: res.data }); // .data adalah tempat data sebenarnya yg disediakan redux / this.setState adalah function untuk set ulang perubahan ke state kemudian otomatis fn render akan dijalankan lagi
+    //this.setState({ products: arrSearch });
+    this.setState({ productSearchPop: arrSearchPop, productSearch: arrSearchPop })
+  } else if (product_genre == "country") {
+    var arrSearchPop = this.state.products.filter(item => {
+      
+        return item.product_genre.toLowerCase().includes("country".toLowerCase());
+      
+      
+    });
+
+    //this.setState({ products: arrSearch });
+    this.setState({ productSearchPop: arrSearchPop, productSearch: arrSearchPop })
+  } else if (product_genre == "jazz") {
+    var arrSearchPop = this.state.products.filter(item => {
+      
+        return item.product_genre.toLowerCase().includes("jazz".toLowerCase());
+     
+      
+    });
+
+    //this.setState({ products: arrSearch });
+    this.setState({ productSearchPop: arrSearchPop, productSearch: arrSearchPop })
+  } else {
+    return console.log("No Input");
     
+  }
   
-
-};
-
-
-// Fungsi Delet
-onDeleteProduct = id => {
-  axios.delete(`http://localhost:1996/carts/${id}`).then(res => {
-    this.getCart();
-  });
-};
+  }
 
 
-renderList = () => {
-  return this.state.keranjang.map(item => {
-    // item berisi objek { id, name, desc, price, src }
+  
+  renderList = () => {
+    return this.state.productSearch.map(iteem => {
+      if (iteem.product_genre === "pop") {
 
-    return (
-      <tr key={item.id}>
-        {/* <td>{item.productId}</td> */}
-        <td>{item.id}</td>
-        <td>{item.first_name}</td>
-        <td>{item.product_tittle}</td>
-        <td>Rp {item.product_price.toLocaleString()}</td>
-        <td>
-          <img className="list" src={`http://localhost:2020/showProdImg/${item.product_image}`} alt={item.desc} />
-        </td>
-        <td>{item.qty}</td>
-        <td>
-          {/* <button
-              onClick={() => {
-                this.onEditProduct(item.id);
-              }}
-              className="btn btn-primary mr-2"
-              >
-              Edit
-            </button> */}
-          <button
-            onClick={() => {
-              this.onDeleteProduct(item.id);
-            }}
-            className="btn btn-danger"
-            >
-            Delete
-          </button>
-        </td>
-      </tr>
-    );
-  });
-};
+        return <ProductItem item={iteem} />; // iteem merupakan tampungan dari objek products yang berisi { id:..., name:..., dec:..., price:...}
+      }
+    
+    });
+  };
 
-onCheckOut = () => {
-  this.setState({
-    flag: !this.state.flag
-  });
-};
+  
+   
+
+
+
 
   render() {
-
-    const id = cookie.get("idLogin");
-    console.log(this.state.keranjang);
-    
-    console.log(id);
-    console.log(this.state.keranjang.length);
-
-
+    console.log(this.props.products);
     return (
-      
-      <div>
-      <div className="container-fluid row pop">
-          <div className="col-3">
-              <ul className="list-group">
-                  <li className="list-group-item sidebarAccount">
-                  <Link to={'/manageaccount/info'}><div>Account Info</div></Link>
-                  </li>
-                  <li className="list-group-item sidebarAccount">
-                  <Link to={'/manageaccount/address'}><div>Address</div></Link>
-                  </li>
-                  <li className="list-group-item sidebarAccount">
-                  <Link to={'/manageaccount/wishlist'}><div>Wishlist</div></Link>
-                  </li>
-              </ul>
-          </div>
-          <div className="col-7">
-              <div>
-              <div className="container">
-            <h1 className="display-4 text-center">Cart List</h1>
-            <table className="table table-hover mb-5">
-              <thead>
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">NAME</th>
-                  <th scope="col">DESC</th>
-                  <th scope="col">PRICE</th>
-                  <th scope="col">PICTURE</th>
-                  <th scope="col">QTY</th>
-                  <th scope="col">ACTION</th>
-                </tr>
-              </thead>
-              <tbody>{this.renderList()}</tbody>
-            </table>
-
-            <button
-              className="btn btn-primary btn-sm m-center"
-              onClick={() => {
-                this.onCheckOut();
-              }}
-            >
-              Chekout
-            </button>
-             {/* sebelum ? itu kondisi, jika kondisi terpenuhi maka jalankan sebelum : jika tidak terpenuhi jalankan setelah tanda tanya  */}
-            {this.state.flag ? <CheckOut carts={this.state.keranjang} /> : null}
-          </div>
+      <div className="row my-5 ">
+        <div className="col-2">
+          {/* <h1 className="display-4">Search</h1> */}
+          <div className="mt-1 row">
+            <div className="mx-auto card">
+              <div className="card-body">
+                <div className="border-bottom border-secondary card-title">
+                  <h1>Search</h1>
+                </div>
+                {/* <div className="card-title mt-1">
+                  <h4>Genre</h4>
+                </div>
+                <form className="input-group">
+                  <input
+                    ref={input => (this.genre = input)}
+                    className="form-control"
+                    // defaultValue="genre"
+                    type="text"
+                  />
+                </form>
+                <button
+                  onClick={this.onBtnSearchGenre}
+                  className="btn btn-outline-secondary btn-block mt-2 mb-5"
+                >
+                  Search Genre
+                </button> */}
+                <div className="card-title mt-1">
+                  <h4>Tittle</h4>
+                </div>
+                <form className="input-group">
+                  <input
+                    ref={input => (this.tittle = input)}
+                    className="form-control"
+                    // defaultValue="tittle"
+                    type="text"
+                  />
+                </form>
+                <div className="card-title mt-1">
+                  <h4>Artist</h4>
+                </div>
+                <form className="input-group">
+                  <input
+                    ref={input => (this.artist = input)}
+                    className="form-control"
+                    // defaultValue="artist"
+                    type="text"
+                  />
+                </form>
+                <div className="card-title mt-1">
+                  <h4>Price</h4>
+                </div>
+                <form className="input-group">
+                  <input
+                    placeholder="Minimum"
+                    ref={input => (this.min = input)}
+                    className="form-control mb-2"
+                    type="text"
+                  />
+                </form>
+                <form className="input-group">
+                  <input
+                    placeholder="Maximum"
+                    ref={input => (this.max = input)}
+                    className="form-control"
+                    type="text"
+                  />
+                </form>
+                <button
+                  onClick={this.onBtnSearch}
+                  className="btn btn-outline-secondary btn-block mt-5"
+                >
+                  Search
+                </button>
               </div>
+            </div>
           </div>
+        </div>
+        <div className="row col-10 ">{this.renderList()}</div>
       </div>
-  </div>
     );
   }
 }
 
-export default Pop;
+const mapStateToProps = state =>{
+  return {
+     products: state.auth.products, address: state.auth.address
+  }
+}
+
+export default connect (mapStateToProps,{getProducts}) (Pop);

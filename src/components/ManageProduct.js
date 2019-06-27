@@ -296,7 +296,7 @@ class ManageProduct extends Component {
     const id = cookie.get('idLogin')
     //if (cookie.get("masihLogin") !== undefined) {
      // if(this.props.user !==""){
-    if (id !== undefined) {
+    if (id === 10) {
       return (
         <div className="container manageproduct">
           <h1 className="display-4 text-center">Manage Product</h1>
@@ -450,8 +450,8 @@ class ManageProduct extends Component {
         </div>
       );
     } else {
-    //  return (<Redirect to="/" />);
-      return null
+     return (<Redirect to="/" />);
+      // return null
       
     }
   }
