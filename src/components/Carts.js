@@ -18,7 +18,8 @@ class Carts extends Component {
     keranjang: [],
     flag: false,
     //flag: true
-    addressCart: []
+    addressCart: [],
+    selectedId: 0
   }
 
  // Ini jalan sekali setelah proses render pertama kali
@@ -68,10 +69,45 @@ onDeleteCart = async id => {
 };
 
 
+// Fungsi Edit Qty
+onEditQty = id => {
+  this.setState({ selectedId: id });
+};
+
+onSaveEditQty = async (id, product_stocks) => {
+  console.log(product_stocks);
+  
+  const qtyBaru = parseInt(this.editQty.value);
+  console.log(qtyBaru);
+  
+  const sisa_stockBaru = parseInt(product_stocks)  - qtyBaru
+  console.log(sisa_stockBaru);
+  
+
+  await axios.patch(`http://localhost:2020/updateCart/cartId/${id}`,{
+    qty : qtyBaru,
+     sisa_stock : sisa_stockBaru
+  }).then(res => {
+    console.log(res);
+    
+      this.getCart();
+      this.setState({ selectedId: 0 });
+    });
+
+  }
+   
+
+
+
+
+
+
+
+
 renderList = () => {
   return this.state.keranjang.map(item => {
     // item berisi objek { id, name, desc, price, src }
-
+    if (item.id !== this.state.selectedId) {
     return (
       <tr key={item.id}>
         {/* <td>{item.productId}</td> */}
@@ -85,14 +121,18 @@ renderList = () => {
         <td>{item.product_stock}</td>
         <td>{item.qty}</td>
         <td>
-          {/* <button
+
+          {/* EDIT CART */}
+          <button
               onClick={() => {
-                this.onEditProduct(item.id);
+                this.onEditQty(item.id);
               }}
               className="btn btn-primary mr-2"
               >
               Edit
-            </button> */}
+            </button>
+
+
           <button
             onClick={() => {
               this.onDeleteCart(item.id);
@@ -104,6 +144,51 @@ renderList = () => {
         </td>
       </tr>
     );
+  } else {
+
+    return (
+      <tr key={item.id}>
+        {/* <td>{item.productId}</td> */}
+        <td>{item.id}</td>
+        <td>{item.first_name}</td>
+        <td>{item.product_tittle}</td>
+        <td>Rp {item.product_price.toLocaleString()}</td>
+        <td>
+          <img className="list" src={`http://localhost:2020/showProdImg/${item.product_image}`} alt={item.desc} />
+        </td>
+        <td>{item.product_stock}</td>
+        <td>
+             <input
+        className="form-control"
+        ref={input => {
+          this.editQty = input;
+        }}
+        type="text"
+        defaultValue={item.qty}
+      />
+        </td>
+        <td>
+           <button
+              onClick={() => {
+                this.onSaveEditQty(item.id, item.product_stock);
+              }}
+              className="btn btn-primary mr-2"
+              >
+              Ok
+            </button> 
+          <button
+            onClick={() => {
+              this.setState({ selectedId: 0 });
+            }}
+            className="btn btn-danger"
+            >
+            Cancel
+          </button>
+        </td>
+      </tr>
+    );
+
+  }
   });
 };
 

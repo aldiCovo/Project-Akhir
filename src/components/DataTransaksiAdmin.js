@@ -290,9 +290,11 @@ class ManageProduct extends Component {
     //console.log(userCookie);
 
     const id = cookie.get('idLogin')
+    const usernameAdmin = cookie.get('usernameLogin')
     //if (cookie.get("masihLogin") !== undefined) {
      // if(this.props.user !==""){
-    if (id === 10) {
+    if (usernameAdmin === "admin789") {
+    // if (id === 10) {
       return (
         <div className="container manageproduct">
           <h1 className="display-4 text-center">DATA TRANSSACTION JOURNAL</h1>

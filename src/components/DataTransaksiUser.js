@@ -201,7 +201,7 @@ class ManageProduct extends Component {
     return this.state.dataTransOpc.map(item => {
       //this.getProdImg(item.product_image)
       // item berisi objek { id, name, desc, price, src }
-      if (item.payment_stat === "waiting" || item.payment_stat === "reupload") {
+      if (item.payment_stat === "waiting for payment" || item.payment_stat === "reupload") {
         if (item.id !== this.state.selectedId) {
           //kondisi saat normal atau tidak tekan tombol edit
           return (

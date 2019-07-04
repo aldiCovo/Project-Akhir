@@ -24,6 +24,7 @@ import DataTransaksiAdmin from "./DataTransaksiAdmin";
 import DataTransaksiUser from "./DataTransaksiUser";
 import DetailProduct from "./DetailProduct";
 // import PaymentNotif from "./PaymentNotif";
+import Footer from './Footer'
 
 const cookie = new cookies();
 
@@ -88,6 +89,7 @@ class App extends React.Component {
           {/* <Route path="//:asdfg" component={DetailProduct} /> */}
           {/* <Route path="/paymentnotif" component={PaymentNotif} /> */}
           {/* <Route path="/detailproduct/:asdfg" component={DetailProduct} /> */}
+          <Footer />
         </div>
       </BrowserRouter>
     );

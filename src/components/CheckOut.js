@@ -248,55 +248,34 @@ order =()=>{
   // console.log('Second')
 
   
-  //     console.log('third')
-  //1
+  
     let opc_id = newSameOrder
-    //console.log(opc_id);
-    
-    //let username = cookie.get("masihLogin");
-    //2
+   
     let user_id = cookie.get("idLogin");
-    //console.log(user_id);
-    //3
+    
     let pemesan = `${this.props.newUser[0].first_name} ${this.props.newUser[0].last_name}`
-    //console.log(pemesan);
-    //let subtotal = this.state.totalCarts[0].total_price
-    //4
+    
     let shipment = this.state.okr
-    //console.log(ongkir);
-    //5
+    
     //let totalAmount = this.state.totalCarts[0].total_price + this.state.shipCosts
     let grand_tot = this.totalOngkir()
-    //let totalAmount = this.state.totOkr
-    //console.log(grand_tot);
-    //6
-    //let address_id = this.state.addressCart[0].id
-    //console.log(address_id);
-    // console.log(this.state.addressCart[0]);
-    // console.log(this.state.addressCart[0].data);
-    //7
+    
     let address = `${this.state.addressCart[0].location_name} ${this.state.addressCart[0].street} ${this.state.addressCart[0].city} ${this.state.addressCart[0].province} ${this.state.addressCart[0].country}, ${this.state.addressCart[0].postal_code}`
-    //console.log(address);
-    //8
+    
     let kurir = this.state.kur
-    //console.log(kurir);
-    //9
+    
     let bank = this.state.bnk
-    //console.log(bank);
-    //10
+    
     let no_rek = this.state.rek
-    //console.log(no_rek);
-    //11
+    
     let payment_stat = "waiting for payment"
-    //12
+    
     let shipment_stat = "waiting for payment"
     let cart_value = this.onHargaTotal()
     let penerima = this.state.addressCart[0].penerima
     console.log(penerima);
     
-    // let fullname = `${this.state.profiles.first_name} ${this.state.profiles.last_name}`
-    // let address = this.state.profiles.address
-    // let telephone = this.state.profiles.telephone
+    
   // post data to orders_per_cart
   axios.post('http://localhost:2020/postOrderPerCart',{
     user_id,
@@ -331,7 +310,8 @@ order =()=>{
 
 
   render() {
-    if(this.state.addressCart.length !== 0){
+    if(this.state.addressCart.length !== 0 ){
+     //if(this.state.addressCart.length !== 0  && this.state.okr !==0 && this.state.okr !=="" && this.state.rek !==0 && this.state.rek !==""){
       var {city, street, country, postal_code, province, phone, location_name, penerima} = this.state.addressCart[0]
       console.log(this.state.addressCart[0].city);
    // }
@@ -568,14 +548,36 @@ order =()=>{
                 </button>
                 </Link>
               </div>
+              <div>
+                <h2>*Jika belum memilih jenis shipment dan bank maka anda memilih JNE REGULER dan BANK BCA</h2>
+              </div>
             </div>
           </main>
 
         </div>
       </div>
     );
-    // Saat user belum isi address
-  }else{
+    
+  } 
+  // else if(this.state.addressCart.length !== 0  && this.state.okr ===0  && this.state.rek ===0 ){
+  //  return (
+  //     <div>
+  //       <h4>ISI DULU PILIHAN KURIR DAN BANK</h4>
+  //     </div>
+
+  // )
+  // }
+  // else if(this.state.addressCart.length !== 0   && this.state.okr ===""  && this.state.rek ===""){
+  //  return (
+  //     <div>
+  //       <h4>ISI DULU PILIHAN KURIR DAN BANK</h4>
+  //     </div>
+
+  // )
+  // }
+
+  // Saat user belum isi address
+  else{
    
 
     return (

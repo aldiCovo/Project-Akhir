@@ -331,6 +331,7 @@ class Header extends Component {
     
     //const last = cookie.get('last_nameLogin')
     const id = cookie.get('idLogin')
+    const usernameAdmin = cookie.get('usernameLogin')
     //const username = cookie.get('usernameLogin')
     if(this.props.newUser.length !==0) {
       var {username} = this.props.newUser[0]
@@ -452,7 +453,8 @@ class Header extends Component {
           </nav>
         </div>
       );
-    } else if (id === 10) {
+    } else if (usernameAdmin === "admin789") {
+    // } else if (id === 10) {
       return (
         <div>
           {/* <Redirect to="/" /> */}

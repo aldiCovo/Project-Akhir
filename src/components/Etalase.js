@@ -31,8 +31,8 @@ class Etalase extends Component {
 
 
   onBtnSearch = () => {
-    const product_tittle = this.tittle.value;
-    const product_artist = this.artist.value;
+    const product_tittle =  this.tittle.value
+    const product_artist = this.artist.value
     const min = parseInt(this.min.value);
     const max = parseInt(this.max.value);
 
@@ -95,56 +95,21 @@ class Etalase extends Component {
   // BUTTON SEARCH GENRE
   onBtnSearchGenre = () => {
     const product_genre = this.genre.value;
-    
-
-    //console.log(product_genre);
-    
 
     // SERCHING GENRE
-    if (product_genre == "pop"){
+    if (product_genre){
+    // if (product_genre == "pop"){
       var arrSearchPop = this.state.products.filter(item => {
         
-          return item.product_genre.toLowerCase().includes("pop".toLowerCase());
+          return item.product_genre.toLowerCase().includes(product_genre.toLowerCase());
+          
        
-        
       });
   
       //this.setState({ products: arrSearch });
       this.setState({ productSearchPop: arrSearchPop, productSearch: arrSearchPop });
-    } else if (product_genre == "rock") {
-    var arrSearchPop = this.state.products.filter(item => {
-     
-        return item.product_genre.toLowerCase().includes("rock".toLowerCase());
-      
-      
-    });
-
-    //this.setState({ products: arrSearch });
-    this.setState({ productSearchPop: arrSearchPop, productSearch: arrSearchPop })
-  } else if (product_genre == "country") {
-    var arrSearchPop = this.state.products.filter(item => {
-      
-        return item.product_genre.toLowerCase().includes("country".toLowerCase());
-      
-      
-    });
-
-    //this.setState({ products: arrSearch });
-    this.setState({ productSearchPop: arrSearchPop, productSearch: arrSearchPop })
-  } else if (product_genre == "jazz") {
-    var arrSearchPop = this.state.products.filter(item => {
-      
-        return item.product_genre.toLowerCase().includes("jazz".toLowerCase());
-     
-      
-    });
-
-    //this.setState({ products: arrSearch });
-    this.setState({ productSearchPop: arrSearchPop, productSearch: arrSearchPop })
-  } else {
-    return console.log("No Input");
-    
-  }
+    }
+  
   
   }
 
@@ -166,7 +131,7 @@ class Etalase extends Component {
     console.log(this.props.products);
     return (
       <div className="row my-5 ">
-        <div className="col-2">
+        <div className="col-2 mr-4">
           {/* <h1 className="display-4">Search</h1> */}
           <div className="mt-1 row">
             <div className="mx-auto card">

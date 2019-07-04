@@ -23,7 +23,7 @@ class ProductItem extends Component {
     //console.log(this.props.username);
     console.log(userId);
 
-    const jml = parseInt(this.jumlah.value);
+     const jml = parseInt(this.jumlah.value);
     // const prdId = res1.data[0].id
     // const qtyNew =  parseInt(res.data[0].qty) + parseInt(this.jumlah.value); 
     // const ssSt1 =  parseInt(res1.data[0].product_stock) -  qtyNew
@@ -32,29 +32,44 @@ class ProductItem extends Component {
     if (userId) {
     // if (this.props.username !== "") {
       axios
+      // Nge gte data product untuk diambil product_stock nya dan productId nya
         .get(`http://localhost:2020/getProduct/${prodId}`)
         .then(res1 => {
           console.log(res1.data);
           
           axios
+          // get cart by userId dan prodId
             .get(`http://localhost:2020/getCart/user/${userId}/prod/${prodId}`)
             .then(res => {
               console.log(res.data);
+              // Jika cart sudah ada isinya / sudah ada cart dengan produk yang sama
               if (res.data.length !== 0) {
                 const qtyNew =
                   parseInt(res.data[0].qty) + parseInt(this.jumlah.value);
+                const cartId = res.data[0].id
                
-                //axios.patch(`http://localhost:2020/carts/${userId}`, {
-                //axios.patch(`http://localhost:2020/carts/${res.data[0].id}`, {
-                axios.patch(`http://localhost:2020/updateCart/cartId/${prodId}`, {
+                axios.patch(`http://localhost:2020/updateCart/${cartId}`, {
+                //axios.patch(`http://localhost:2020/updateCart/${prodId}`, {
+                // axios.patch(`http://localhost:2020/updateCart/cartId/${prodId}`, {
                   // productId: res.data[0].productId,
                   product_id: res1.data[0].id,
                  
+                  
                   user_id: userId,
                   qty: qtyNew,
                   sisa_stock: parseInt(res1.data[0].product_stock) -  qtyNew
+                
                   
-                }).then(res=>{
+                }).then(res =>{console.log(cartId)
+                })
+                .then(res =>{console.log(qtyNew)
+                })
+                .then(res =>{console.log(parseInt(res1.data[0].product_stock) -  qtyNew)
+                })
+                .then(res =>{console.log(res1.data[0].id)
+                })
+               
+                .then(res=>{
                   axios.patch(`http://localhost:2020/updateProd/${prodId}/product_image`,{
                     product_stock : parseInt(res1.data[0].product_stock) -  qtyNew
                   })
@@ -98,13 +113,13 @@ class ProductItem extends Component {
 
       return (
         <div
-          className="card col-3 m-1"
+          className="card col-3.5 m-1"
           style={{ width: "18rem" }}
           key={item.id}
         >
           <img src={`http://localhost:2020/showProdImg/${item.product_image}`} className="card-img-top-center" alt={item.name} />
           <div className="card-body">
-            <h5 className="card-title">{item.product_tittle}</h5>
+            <h6 className="card-title">{item.product_tittle}</h6>
   
             <p className="card-title">Artist : {item.product_artist}</p>
             {/* <p className="card-text">{item.desc}</p> */}
@@ -137,7 +152,7 @@ class ProductItem extends Component {
 
       return (
         <div
-          className="card col-3 m-1"
+          className="card col-3.5 m-1"
           style={{ width: "18rem" }}
           key={item.id}
         >
