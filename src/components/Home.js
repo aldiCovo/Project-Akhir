@@ -39,7 +39,8 @@ class Home extends Component {
                 <div class="carousel-inner">
                   <div class="carousel-item active">
                     <img
-                      src="https://scontent.fcgk12-1.fna.fbcdn.net/v/t1.0-9/49384594_591804604597983_273246652595175424_n.jpg?_nc_cat=1&_nc_eui2=AeHf6NoeoY6u79MEV2vJVHW8INKUusRrQ4SE-SugAFBtjQec3fB2eKJEl9_ig0TWo3AmKs7oJv2hndowQK46IMlwjuO5nwyqTOKTUkyUCpafGQ&_nc_ht=scontent.fcgk12-1.fna&oh=0af0020b242f13042ada0bafe1a387f6&oe=5D223FFC"
+                      src="https://images-na.ssl-images-amazon.com/images/I/51RMqYKviOL._SX425_.jpg"
+                      
                       class="d-block w-100"
                       alt="..."
                     />
